@@ -47,7 +47,7 @@ class User < ApplicationRecord
     request["content-type"] = "application/json"
     request.body = {
       email: self.email,
-      password: "",
+      password: SecureRandom.base64(24),
       connection: "Username-Password-Authentication",
       email_verified: true,
     }.to_json
