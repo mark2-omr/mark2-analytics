@@ -1,0 +1,17 @@
+<div id="<%= dom_id user %>" class="card">
+  <div class="card-header">
+    <%= user.name %>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered" style="table-layout: fixed;">
+      <tr>
+        <th><%= t("activerecord.attributes.user.email") %></th>
+        <td><%= user.email %></td>
+      </tr>
+      <tr>
+        <th><%= t("activerecord.attributes.user.name") %></th>
+        <td><%= user.name %></td>
+      </tr>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to root_path do %>
+          <i class="bi bi-house-door"></i>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item" aria-current="page">
+        <%= link_to groups_path do %>
+          <%= t("activerecord.models.group") %>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <%= t("views.new_group") %>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <%= t("views.new_group") %>
+  </div>
+  <div class="card-body">
+    <%= render "form", group: @group %>
+  </div>
+</div>

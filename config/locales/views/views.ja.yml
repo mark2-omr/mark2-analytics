@@ -1,0 +1,12 @@
+ja:
+  views:
+    sign_in: "ログイン"
+    sign_out: "ログアウト"
+
+    edit: "編集"
+    delete: "削除"
+
+    new_group: "グループの作成"
+    edit_group: "グループの編集"
+    new_user: "ユーザーの作成"
+    edit_user: "ユーザーの編集"

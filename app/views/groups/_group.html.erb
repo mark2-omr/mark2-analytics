@@ -1,0 +1,17 @@
+<div id="<%= dom_id group %>" class="card">
+  <div class="card-header">
+    <%= group.name %>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered" style="table-layout: fixed;">
+      <tr>
+        <th><%= t("activerecord.attributes.group.name") %></th>
+        <td><%= group.name %></td>
+      </tr>
+    </table>
+
+    <%= link_to users_path(group_id: @group.id), class: "btn btn-primary" do %>
+      <i class="bi bi-person-fill"></i> <%= t("activerecord.models.user") %>
+    <% end %>
+  </div>
+</div>

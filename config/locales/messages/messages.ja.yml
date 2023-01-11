@@ -1,0 +1,11 @@
+ja:
+  messages:
+    confirm_deletion: "削除してもよいですか？"
+
+    user_created: "ユーザーが登録されました。"
+    user_updated: "ユーザーが更新されました。"
+    user_destroyed: "ユーザーが削除されました。"
+
+    group_created: "グループが登録されました。"
+    group_updated: "グループが更新されました。"
+    group_destroyed: "グループが削除されました。"

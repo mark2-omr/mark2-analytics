@@ -1,0 +1,13 @@
+ja:
+  activerecord:
+    models:
+      user: "ユーザー"
+      group: "グループ"
+    attributes:
+      user:
+        email: "Eメール"
+        name: "名前"
+        admin: "システム管理権限"
+        manager: "マネージャー権限"
+      group:
+        name: "名前"

@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to root_path do %>
+          <i class="bi bi-house-door"></i>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item">
+        <%= link_to groups_path do %>
+          <%= t("activerecord.models.group") %>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item">
+        <%= link_to @user.group do %>
+          <%= @user.group.name %>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item" aria-current="page">
+        <%= link_to users_path(group_id: @user.group.id) do %>
+          <%= t("activerecord.models.user") %>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <%= t("views.new_user") %>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <%= t("views.new_user") %>
+  </div>
+  <div class="card-body">
+    <%= render "form", user: @user %>
+  </div>
+</div>
