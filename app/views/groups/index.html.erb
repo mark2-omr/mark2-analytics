@@ -14,11 +14,18 @@
 </div>
 
 <% if @groups.count > 0 %>
-  <div id="groups" class="list-group">
-    <% @groups.each do |group| %>
-      <%= link_to group.name, group,
-        class: "list-group-item list-group-item-action" %>
-    <% end %>
+  <div class="card">
+    <div class="card-header">
+      <%= t("activerecord.models.group") %>
+    </div>
+    <div class="card-body">
+      <div id="groups" class="list-group">
+        <% @groups.each do |group| %>
+          <%= link_to group.name, group,
+            class: "list-group-item list-group-item-action" %>
+        <% end %>
+      </div>
+    </div>
   </div>
 <% end %>
 
