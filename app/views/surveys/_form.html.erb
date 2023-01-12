@@ -1,0 +1,39 @@
+<%= form_with(model: survey) do |form| %>
+  <% if survey.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(survey.errors.count, "error") %> prohibited this survey from being saved:</h2>
+
+      <ul>
+        <% survey.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :definition, class: "form-label" %>
+    <%= form.file_field :definition, class: "form-control", accept: ".xlsx",
+      required: params[:action] == "new" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :convert_url, class: "form-label" %>
+    <%= form.text_field :convert_url, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :submittable, class: "form-label" %>
+    <%= form.select :submittable, [[t('views.enabled'), true],
+      [t('views.disabled'), false]], {}, class: 'form-control' %>
+  </div>
+
+  <div class="tb-3">
+    <%= form.submit class: "btn btn-primary col-4 offset-4" %>
+  </div>
+<% end %>

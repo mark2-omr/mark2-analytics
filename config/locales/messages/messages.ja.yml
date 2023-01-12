@@ -9,3 +9,7 @@ ja:
     group_created: "グループが登録されました。"
     group_updated: "グループが更新されました。"
     group_destroyed: "グループが削除されました。"
+
+    survey_created: "学力調査が登録されました。"
+    survey_updated: "学力調査が更新されました。"
+    survey_destroyed: "学力調査が削除されました。"

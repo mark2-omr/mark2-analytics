@@ -1,0 +1,31 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to root_path do %>
+          <i class="bi bi-house-door"></i>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item">
+        <%= link_to surveys_path do %>
+          <%= t("activerecord.models.survey") %>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <%= @survey.name %>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<%= render @survey %>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap mt-3">
+  <%= link_to edit_survey_path(@survey), class: "btn btn-warning" do %>
+    <i class="bi bi-pencil"></i> <%= t("views.edit") %>
+  <% end %>
+  <%= button_to @survey, method: :delete, class: "btn btn-danger",
+    data: { turbo_confirm: t("messages.confirm_deletion") } do %>
+    <i class="bi bi-trash"></i> <%= t("views.delete") %>
+  <% end %>
+</div>

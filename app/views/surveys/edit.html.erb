@@ -1,0 +1,31 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to root_path do %>
+          <i class="bi bi-house-door"></i>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item" aria-current="page">
+        <%= link_to surveys_path do %>
+          <%= t("activerecord.models.survey") %>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item">
+        <%= link_to @survey.name, @survey %>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <%= t("views.edit_survey") %>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <%= t("views.edit_survey") %>
+  </div>
+  <div class="card-body">
+    <%= render "form", survey: @survey %>
+  </div>
+</div>
