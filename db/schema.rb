@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_09_061444) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_12_005546) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,6 +18,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_09_061444) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "surveys", force: :cascade do |t|
+    t.integer "group_id"
+    t.string "name"
+    t.binary "definition"
+    t.string "convert_url"
+    t.json "grades"
+    t.json "subjects"
+    t.json "questions"
+    t.json "question_attributes"
+    t.json "student_attributes"
+    t.boolean "updatable", default: true
+    t.json "aggregated"
+    t.binary "merged"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_surveys_on_group_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -29,6 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_09_061444) do
     t.boolean "manager", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
   end
 

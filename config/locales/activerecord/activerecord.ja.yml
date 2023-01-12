@@ -3,6 +3,7 @@ ja:
     models:
       user: "ユーザー"
       group: "グループ"
+      survey: "学力調査"
     attributes:
       user:
         email: "Eメール"
@@ -11,3 +12,12 @@ ja:
         manager: "マネージャー権限"
       group:
         name: "名前"
+      survey:
+        name: "名前"
+        definition: "定義"
+        convert_url: "データ変換URL"
+        grades: "学年"
+        subjects: "科目"
+        question_attributes: "設問属性"
+        student_attributes: "児童・生徒属性"
+        submittable: "データ提出"

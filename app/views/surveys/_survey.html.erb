@@ -1,0 +1,44 @@
+<div id="<%= dom_id survey %>" class="card">
+  <div class="card-header">
+    <%= survey.name %>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered" style="table-layout: fixed;">
+      <tr>
+        <th><%= t("activerecord.attributes.survey.name") %></th>
+        <td><%= survey.name %></td>
+      </tr>
+      <tr>
+        <th><%= t("activerecord.attributes.survey.convert_url") %></th>
+        <td><%= survey.convert_url %></td>
+      </tr>
+      <tr>
+        <th><%= t("activerecord.attributes.survey.grades") %></th>
+        <td><%= survey.grades %></td>
+      </tr>
+      <tr>
+        <th><%= t("activerecord.attributes.survey.subjects") %></th>
+        <td><%= survey.subjects %></td>
+      </tr>
+      <tr>
+        <th><%= t("activerecord.attributes.survey.question_attributes") %></th>
+        <td><%= survey.question_attributes %></td>
+      </tr>
+      <tr>
+        <th><%= t("activerecord.attributes.survey.student_attributes") %></th>
+        <td><%= survey.student_attributes %></td>
+      </tr>
+      <tr>
+        <th><%= t("activerecord.attributes.survey.submittable") %></th>
+        <td>
+          <%= survey.submittable ? t("views.enabled") : t("views.disabled") %>
+        </td>
+      </tr>
+    </table>
+
+    <%= link_to download_definition_survey_path(@survey),
+      class: "btn btn-primary" do %>
+      <i class="bi bi-download"></i> <%= t("views.download_definition") %>
+    <% end %>
+  </div>
+</div>

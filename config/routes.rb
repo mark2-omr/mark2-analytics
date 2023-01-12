@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :surveys do
+    member { get :download_definition }
+  end
   resources :groups
   resources :users
 

@@ -33,6 +33,12 @@
                 <i class="bi bi-house-door"></i> Home
               <% end %>
             </li>
+            <li>
+              <%= link_to surveys_path, class: "dropdown-item" do %>
+                <i class="bi bi-clipboard"></i>
+                <%= t("activerecord.models.survey") %>
+              <% end %>
+            </li>
             <li><hr class="dropdown-divider"></li>
             <li>
               <%= link_to sign_out_path,
@@ -76,12 +82,14 @@
               <% if user_signed_in? %>
                 <li class="nav-item">
                   <% if params[:controller] == "surveys" %>
-                    <%= link_to root_path, class: "nav-link active" do %>
-                      <i class="bi bi-clipboard-fill"></i> Surveys
+                    <%= link_to surveys_path, class: "nav-link active" do %>
+                      <i class="bi bi-clipboard-fill"></i>
+                      <%= t("activerecord.models.survey") %>
                     <% end %>
                   <% else %>
-                    <%= link_to root_path, class: "nav-link" do %>
-                      <i class="bi bi-clipboard"></i> Surveys
+                    <%= link_to surveys_path, class: "nav-link" do %>
+                      <i class="bi bi-clipboard"></i>
+                      <%= t("activerecord.models.survey") %>
                     <% end %>
                   <% end %>
                 </li>

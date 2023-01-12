@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to root_path do %>
+          <i class="bi bi-house-door"></i>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <%= t("activerecord.models.survey") %>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<% if @surveys.count > 0 %>
+  <div class="card">
+    <div class="card-header">
+      <%= t("activerecord.models.survey") %>
+    </div>
+    <div class="card-body">
+      <div id="surveys" class="list-group">
+        <% @surveys.each do |survey| %>
+          <%= link_to survey.name, survey,
+            class: "list-group-item list-group-item-action" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <%= link_to new_survey_path, class: "btn btn-primary" do %>
+      <i class="bi bi-plus-lg"></i> <%= t("views.new_survey") %>
+    <% end %>
+  </div>
+</div>
