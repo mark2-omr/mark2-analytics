@@ -13,3 +13,6 @@ ja:
     survey_created: "学力調査が登録されました。"
     survey_updated: "学力調査が更新されました。"
     survey_destroyed: "学力調査が削除されました。"
+
+    result_created: "結果が登録されました。"
+    result_destroyed: "結果が削除されました。"

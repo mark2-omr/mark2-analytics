@@ -10,6 +10,9 @@ class SurveysController < ApplicationController
 
   # GET /surveys/1 or /surveys/1.json
   def show
+    unless current_user.manager
+      @results = Result.where(survey_id: @survey.id, user_id: current_user.id)
+    end
   end
 
   # GET /surveys/new

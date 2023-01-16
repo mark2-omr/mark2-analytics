@@ -4,6 +4,7 @@ ja:
       user: "ユーザー"
       group: "グループ"
       survey: "学力調査"
+      result: "結果"
     attributes:
       user:
         email: "Eメール"
@@ -21,3 +22,7 @@ ja:
         question_attributes: "設問属性"
         student_attributes: "児童・生徒属性"
         submittable: "データ提出"
+      result:
+        grade: "学年"
+        subject: "科目"
+        file: "ファイル"

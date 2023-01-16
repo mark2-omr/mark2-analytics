@@ -11,15 +11,23 @@
           <%= t("activerecord.models.survey") %>
         <% end %>
       </li>
+      <li class="breadcrumb-item">
+        <%= link_to @survey do %>
+          <%= @survey.name %>
+        <% end %>
+      </li>
       <li class="breadcrumb-item active" aria-current="page">
-        <%= @survey.name %>
+        <%= t("views.new_result") %>
       </li>
     </ol>
   </nav>
 </div>
 
-<% if current_user.manager %>
-  <%= render @survey %>
-<% else %>
-  <%= render "results", survey: @survey, results: @results %>
-<% end %>
+<div class="card">
+  <div class="card-header">
+    <%= t("views.new_result") %>
+  </div>
+  <div class="card-body">
+  <%= render "form", result: @result %>
+  </div>
+</div>

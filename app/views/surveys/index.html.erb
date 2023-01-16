@@ -26,13 +26,12 @@
         <% end %>
       </div>
     </div>
-  </div>
-<% end %>
-
-<div class="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-  <div class="btn-toolbar mb-2 mb-md-0">
-    <%= link_to new_survey_path, class: "btn btn-primary" do %>
-      <i class="bi bi-plus-lg"></i> <%= t("views.new_survey") %>
+    <% if current_user.manager %>
+      <div class="card-footer">
+        <%= link_to new_survey_path, class: "btn btn-primary" do %>
+          <i class="bi bi-plus-lg"></i> <%= t("views.new_survey") %>
+        <% end %>
+      </div>
     <% end %>
   </div>
-</div>
+<% end %>
