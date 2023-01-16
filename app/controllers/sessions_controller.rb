@@ -7,7 +7,16 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to root_url, status: :see_other
+    request_params = {
+      returnTo: root_url,
+      client_id: Rails.application.credentials.auth0.app.client_id,
+    }
+    redirect_to URI::HTTPS.build(
+                  host: Rails.application.credentials.auth0.domain,
+                  path: "/v2/logout",
+                  query: request_params.to_query,
+                ).to_s,
+                allow_other_host: true
   end
 
   def failure
