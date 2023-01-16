@@ -5,15 +5,36 @@ ja:
 
     edit: "編集"
     delete: "削除"
+    download: "ダウンロード"
     enabled: "可能"
     disabled: "不可能"
 
     new_group: "グループの作成"
     edit_group: "グループの編集"
     new_user: "ユーザーの作成"
-
     edit_user: "ユーザーの編集"
     new_survey: "学力調査の作成"
     edit_survey: "学力調査の編集"
+    new_result: "結果の登録"
 
     download_definition: "定義のダウンロード"
+
+    grade_1: "小学1年"
+    grade_2: "小学2年"
+    grade_3: "小学3年"
+    grade_4: "小学4年"
+    grade_5: "小学5年"
+    grade_6: "小学6年"
+    grade_7: "中学1年"
+    grade_8: "中学2年"
+    grade_9: "中学3年"
+    grade_10: "高校1年"
+    grade_11: "高校2年"
+    grade_12: "高校3年"
+
+    subject_1: "国語"
+    subject_2: "数学"
+    subject_3: "社会"
+    subject_4: "理科"
+    subject_5: "英語"
+    subject_6: "アンケート"

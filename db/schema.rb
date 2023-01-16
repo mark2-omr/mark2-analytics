@@ -10,12 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_12_005546) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_16_012925) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "groups", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.integer "survey_id"
+    t.integer "user_id"
+    t.integer "grade"
+    t.integer "subject"
+    t.binary "uploaded"
+    t.json "parsed"
+    t.json "converted"
+    t.json "messages"
+    t.boolean "verified"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -30,7 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_12_005546) do
     t.json "questions"
     t.json "question_attributes"
     t.json "student_attributes"
-    t.boolean "updatable", default: true
+    t.boolean "submittable", default: true
     t.json "aggregated"
     t.binary "merged"
     t.datetime "created_at", null: false
