@@ -8,6 +8,8 @@ ja:
     download: "ダウンロード"
     enabled: "可能"
     disabled: "不可能"
+    download_definition: "定義のダウンロード"
+    no_data: "登録されているデータはありません。"
 
     new_group: "グループの作成"
     edit_group: "グループの編集"
@@ -16,8 +18,6 @@ ja:
     new_survey: "学力調査の作成"
     edit_survey: "学力調査の編集"
     new_result: "結果の登録"
-
-    download_definition: "定義のダウンロード"
 
     grade_1: "小学1年"
     grade_2: "小学2年"

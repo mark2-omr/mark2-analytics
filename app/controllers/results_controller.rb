@@ -24,6 +24,58 @@ class ResultsController < ApplicationController
   def create
     @result = Result.new(result_params)
     @result.user_id = current_user.id
+
+    # Check grade and subject combination
+    if @result.survey.questions.key?("#{@result.grade}-#{@result.subject}")
+      Result.where(
+        user_id: current_user.id,
+        survey_id: @result.survey_id,
+        grade: @result.grade,
+        subject: @result.subject,
+      ).destroy_all
+    else
+      redirect_to(
+        {
+          action: "new",
+          survey_id: @result.survey.id,
+          grade: @result.grade,
+          subject: @result.subject,
+        },
+        alert: t("messages.check_grade_and_subject"),
+      )
+      return
+    end
+
+    begin
+      workbook = Roo::Excelx.new(params[:result][:file].tempfile.to_path.to_s)
+      @result.load(workbook)
+      @result.file = params[:result][:file].read
+    rescue StandardError
+      redirect_to(
+        {
+          action: "new",
+          survey_id: @result.survey.id,
+          grade: @result.grade,
+          subject: @result.subject,
+        },
+        alert: t("messages.data_convert_error"),
+      )
+      return
+    end
+
+    unless @result.verified
+      redirect_to(
+        {
+          action: "new",
+          survey_id: @result.survey.id,
+          grade: @result.grade,
+          subject: @result.subject,
+        },
+        alert: @result.messages.join("<br />"),
+      )
+      return
+    end
+
     @result.file = params[:result][:file].read
 
     respond_to do |format|
