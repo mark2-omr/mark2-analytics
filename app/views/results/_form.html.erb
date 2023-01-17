@@ -16,13 +16,13 @@
   <div class="mb-3">
     <%= form.label :grade, class: "form-label" %>
     <%= form.select :grade, result.survey.grades.map{ |g| [t("views.grade_#{g}"), g] },
-      {}, class: "form-control" %>
+      {selected: params[:grade]}, class: "form-control" %>
   </div>
 
   <div class="mb-3">
     <%= form.label :subject, class: "form-label" %>
     <%= form.select :subject, result.survey.subjects.map{ |s| [t("views.subject_#{s}"), s] },
-      {}, class: "form-control" %>
+      {selected: params[:subject]}, class: "form-control" %>
   </div>
 
   <div class="mb-3">
