@@ -83,4 +83,5 @@ production:
   <<: *default
   database: mark2_analytics_production
   username: mark2_analytics
-  password: <%= ENV["MARK2_ANALYTICS_DATABASE_PASSWORD"] %>
+  password: <%= Rails.application.credentials.gcp.cloud_sql.password %>
+  host: <%= Rails.application.credentials.gcp.cloud_sql.host %>
