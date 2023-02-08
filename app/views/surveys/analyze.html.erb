@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap
+  align-items-center pt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to root_path do %>
+          <i class="bi bi-house-door"></i>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <%= t("views.data_analysis") %>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <%= t("views.data_analysis") %>
+  </div>
+  <div class="card-body">
+    <%= form_with(method: :get, url: analyze_surveys_path) do |form| %>
+      <div class="mb-3">
+        <%= form.label t("activerecord.models.survey"), class: "form-label" %>
+        <%= form.select :survey_id, @surveys.pluck(:name, :id),
+          { selected: params[:survey_id] }, onchange: "this.form.requestSubmit()",
+          class: "form-select" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label t("activerecord.attributes.survey.grades"),
+          class: "form-label" %>
+        <%= form.select :grade, @survey.grades.map { |grade|
+          [t("views.grade_#{grade}"), grade] },
+          { selected: params[:grade] }, onchange: "this.form.requestSubmit()",
+          class: "form-select" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label t("activerecord.attributes.survey.subjects"),
+          class: "form-label" %>
+        <%= form.select :subject, @survey.subjects.map { |subject|
+          [t("views.subject_#{subject}"), subject] },
+          { selected: params[:subject] }, onchange: "this.form.requestSubmit()",
+          class: "form-select" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label t("views.attributes"), class: "form-label" %>
+        <% @student_attributes.each_with_index do |options, i| %>
+          <%= select_tag("student_attributes[]",
+            options_for_select(options,
+              params[:student_attributes].nil? ? 0 : params[:student_attributes][i]),
+            onchange: "this.form.requestSubmit()",
+            class: "form-select mb-2") %>
+        <% end %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label t("views.analysis_method"), class: "form-label" %>
+        <% if params[:subject] == "6" %>
+          <%= form.select :method, [[t("views.analysis.pattern"), "pattern"],
+            [t("views.analysis.cross"), "cross"]],
+            { selected: params[:method] }, onchange: "this.form.requestSubmit()",
+            class: "form-select" %>
+        <% else %>
+          <%= form.select :method, [[t("views.analysis.pattern"), "pattern"],
+            [t("views.analysis.average"), "average"],
+            [t("views.analysis.category"), "category"],
+            [t("views.analysis.histogram"), "histogram"],
+            [t("views.analysis.cross"), "cross"]],
+            { selected: params[:method] }, onchange: "this.form.requestSubmit()",
+            class: "form-select" %>
+        <% end %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label t("views.comparison_target"), class: "form-label" %>
+        <%= form.select :compare,
+          grouped_options_for_select(@compares, params['compare']),
+          {}, onchange: "this.form.requestSubmit()",
+          class: "form-select" %>
+      </div>
+
+      <div class="tb-3">
+        <%= form.submit class: "btn btn-primary col-4 offset-4" %>
+      </div>
+    <% end %>
+  </div>
+</div>

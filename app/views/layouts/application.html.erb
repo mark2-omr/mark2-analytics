@@ -81,7 +81,7 @@
               </li>
               <% if user_signed_in? %>
                 <li class="nav-item">
-                  <% if params[:controller] == "surveys" %>
+                  <% if params[:controller] == "surveys" and params[:action] != "analyze" %>
                     <%= link_to surveys_path, class: "nav-link active" do %>
                       <i class="bi bi-clipboard-fill"></i>
                       <%= t("activerecord.models.survey") %>
@@ -93,6 +93,18 @@
                     <% end %>
                   <% end %>
                 </li>
+
+                <% unless current_user.admin %>
+                  <li class="nav-item">
+                    <%= link_to analyze_surveys_path,
+                      class: (params[:controller] == "surveys" and
+                      params[:action] == "analyze") ? "nav-link active"
+                      : "nav-link" do %>
+                      <i class="bi bi-search"></i>
+                      <%= t("views.data_analysis") %>
+                    <% end %>
+                  </li>
+                <% end %>
 
                 <% if current_user.admin %>
                   <li class="nav-item">

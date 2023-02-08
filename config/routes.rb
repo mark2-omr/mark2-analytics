@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   end
 
   resources :surveys do
+    collection { get :analyze }
     member { get :download_definition }
   end
 
