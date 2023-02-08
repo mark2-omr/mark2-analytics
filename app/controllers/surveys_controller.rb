@@ -90,6 +90,32 @@ class SurveysController < ApplicationController
     send_data(@survey.definition, filename: "#{@survey.id}.xlsx")
   end
 
+  def analyze
+    @surveys = Survey.where(group_id: current_user.group_id)
+    if params[:survey_id]
+      @survey = Survey.find(params[:survey_id])
+    else
+      @survey = @surveys.first
+    end
+
+    @student_attributes = Array.new
+    @survey.student_attributes.each_with_index do |(key, values), i|
+      options = Hash.new
+      options["#{t("views.all")} (#{key})"] = 0
+      @student_attributes.push(options.update(values.invert))
+    end
+
+    @compares = [[t("views.all"), [[t("views.all"), "all"]]]]
+    @survey.student_attributes.each do |attribute_label, attribute_values|
+      next if attribute_label == t("views.class")
+      values = Array.new
+      attribute_values.each do |attribute_key, attribute_value|
+        values.push([attribute_value, "#{attribute_label}-#{attribute_key}"])
+      end
+      @compares.push([attribute_label, values])
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

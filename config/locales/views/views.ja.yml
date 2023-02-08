@@ -11,6 +11,8 @@ ja:
     download_definition: "定義のダウンロード"
     no_data: "登録されているデータはありません。"
 
+    data_analysis: "データ分析"
+
     new_group: "グループの作成"
     edit_group: "グループの編集"
     new_user: "ユーザーの作成"
@@ -18,6 +20,28 @@ ja:
     new_survey: "学力調査の作成"
     edit_survey: "学力調査の編集"
     new_result: "結果の登録"
+
+    attributes: "属性情報"
+    analysis_method: "分析方法"
+    analysis:
+      pattern: "回答状況"
+      average: "正答率"
+      category: "カテゴリー"
+      histogram: "正答数ヒストグラム"
+      cross: "クロス集計"
+
+    school: "学校"
+    comparison_target: "比較対象"
+    all: "全体"
+    class: "クラス"
+    analyze: "分析"
+
+    answer: "回答"
+    question: "設問"
+    percent_correct: "正答率"
+    percent_correct_for_comparison: 正答率（比較対象）
+    number_of_people: "人数"
+    number_of_corrects: "正答数"
 
     grade_1: "小学1年"
     grade_2: "小学2年"
