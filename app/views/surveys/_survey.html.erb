@@ -14,7 +14,9 @@
       </tr>
       <tr>
         <th><%= t("activerecord.attributes.survey.grades") %></th>
-        <td><%= survey.grades %></td>
+        <td>
+          <%= survey.grades.map { |grade| t("views.grade_#{grade}") }.join(", ") %>
+        </td>
       </tr>
       <tr>
         <th><%= t("activerecord.attributes.survey.subjects") %></th>
