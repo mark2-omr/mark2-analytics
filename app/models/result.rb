@@ -113,4 +113,43 @@ class Result < ApplicationRecord
 
     return outputs
   end
+
+  def category(student_attributes)
+    questions = self.survey.questions["#{self.grade}-#{self.subject}"]
+    selected_results = self.filter(student_attributes)
+
+    outputs = Array.new
+    question_attributes = self.survey.question_attributes
+    question_attributes.each do |question_attribute|
+      outputs.push(title: question_attribute, values: Hash.new)
+    end
+
+    question_attributes.each_with_index do |question_attribute, i|
+      questions.each_with_index do |question, j|
+        label = question["question_attributes"][question_attribute]
+        outputs[i][:values][label] = 0.0 unless outputs[i][:values].key?(label)
+      end
+
+      outputs[i][:values].each do |key, value|
+        correct_count, total_count = 0.0, 0.0
+        questions.each_with_index do |question, j|
+          next unless question["question_attributes"][question_attribute] == key
+          selected_results.each do |selected_result|
+            if selected_result["values"][j] == question["corrects"]
+              correct_count += 1.0
+              total_count += 1.0
+            elsif selected_result["values"][i].nil?
+            elsif selected_result["values"][j].include?(99)
+            else
+              total_count += 1.0
+            end
+          end
+        end
+
+        outputs[i][:values][key] = correct_count / total_count * 100
+      end
+    end
+
+    return outputs
+  end
 end
