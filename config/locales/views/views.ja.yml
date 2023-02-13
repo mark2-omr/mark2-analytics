@@ -25,21 +25,19 @@ ja:
     analysis_method: "分析方法"
     analysis:
       pattern: "回答状況"
-      average: "正答率"
+      correct_ratios: "正答率"
       category: "カテゴリー"
       histogram: "正答数ヒストグラム"
       cross: "クロス集計"
 
     school: "学校"
-    comparison_target: "比較対象"
+    comparator: "比較対象"
     all: "全体"
     class: "クラス"
     analyze: "分析"
 
     answer: "回答"
     question: "設問"
-    percent_correct: "正答率"
-    percent_correct_for_comparison: 正答率（比較対象）
     number_of_people: "人数"
     number_of_corrects: "正答数"
 

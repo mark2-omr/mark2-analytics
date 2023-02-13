@@ -14,7 +14,7 @@
   </nav>
 </div>
 
-<div class="card">
+<div class="card mb-3">
   <div class="card-header">
     <%= t("views.data_analysis") %>
   </div>
@@ -65,7 +65,7 @@
             class: "form-select" %>
         <% else %>
           <%= form.select :method, [[t("views.analysis.pattern"), "pattern"],
-            [t("views.analysis.average"), "average"],
+            [t("views.analysis.correct_ratios"), "correct_ratios"],
             [t("views.analysis.category"), "category"],
             [t("views.analysis.histogram"), "histogram"],
             [t("views.analysis.cross"), "cross"]],
@@ -75,7 +75,7 @@
       </div>
 
       <div class="mb-3">
-        <%= form.label t("views.comparison_target"), class: "form-label" %>
+        <%= form.label t("views.comparator"), class: "form-label" %>
         <%= form.select :compare,
           grouped_options_for_select(@compares, params['compare']),
           {}, onchange: "this.form.requestSubmit()",
@@ -88,3 +88,17 @@
     <% end %>
   </div>
 </div>
+
+<% if params[:commit] %>
+  <% case params[:method] when "patterns" %>
+    <%= render "patterns" %>
+  <% when "correct_ratios" %>
+    <%= render "correct_ratios" %>
+  <% when "category" %>
+    <%= render "category" %>
+  <% when "histogram" %>
+    <%= render "histogram" %>
+  <% when "cross" %>
+    <%= render "cross" %>
+  <% end %>
+<% end %>

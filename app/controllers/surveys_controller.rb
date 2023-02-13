@@ -114,6 +114,16 @@ class SurveysController < ApplicationController
       end
       @compares.push([attribute_label, values])
     end
+
+    if params[:commit]
+      @result =
+        Result.where(
+          user_id: current_user.id,
+          survey_id: @survey.id,
+          grade: params[:grade],
+          subject: params[:subject],
+        ).first
+    end
   end
 
   private
