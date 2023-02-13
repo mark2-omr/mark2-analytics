@@ -1,0 +1,34 @@
+<div class="card mb-3">
+  <div class="card-header">
+    <%= t("views.analysis.correct_ratios") %>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped table-bordered">
+      <tr>
+        <th class="col-sm-6 text-center">
+          <%= t("views.question") %>
+        </th>
+        <th class="col-sm-3 text-center">
+          <%= t("views.analysis.correct_ratios") %>
+        </th>
+        <th class="col-sm-3 text-center">
+          <%= t("views.analysis.correct_ratios") %>
+          (<%= t("views.comparator") %>)
+        </th>
+      </tr>
+      <% @result.correct_ratios(params[:student_attributes]).each_with_index do |correct_ratio, i| %>
+        <tr>
+          <td>
+            <%= correct_ratio[:question] %>
+          </td>
+          <td align="right">
+            <%= sprintf("%.2f", correct_ratio[:value].to_f) %> %
+          </td>
+          <td align="right">
+            <%= sprintf("%.2f", correct_ratio[:comparator].to_f) %> %
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

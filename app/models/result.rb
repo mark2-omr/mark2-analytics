@@ -70,4 +70,47 @@ class Result < ApplicationRecord
       self.verified = false
     end
   end
+
+  def filter(student_attributes)
+    selected_results = self.converted
+    self.survey.student_attributes.each_with_index do |(key, value), i|
+      unless student_attributes[i].to_i == 0
+        selected_results.select! do |a|
+          a["student_attributes"][key] == student_attributes[i].to_i
+        end
+      end
+    end
+
+    return selected_results
+  end
+
+  def correct_ratios(student_attributes)
+    questions = self.survey.questions["#{self.grade}-#{self.subject}"]
+    selected_results = self.filter(student_attributes)
+
+    outputs = Array.new
+    questions.each_with_index do |question, i|
+      correct_count, total_count = 0.0, 0.0
+      selected_results.each do |selected_result|
+        if selected_result["values"][i] == question["corrects"]
+          correct_count += 1.0
+          total_count += 1.0
+        elsif selected_result["values"][i].nil?
+        elsif selected_result["values"][i].include?(99)
+        else
+          total_count += 1.0
+        end
+      end
+
+      outputs.push(
+        {
+          question: question["label"],
+          value: correct_count / total_count * 100,
+          comparator: 50.0,
+        },
+      )
+    end
+
+    return outputs
+  end
 end
