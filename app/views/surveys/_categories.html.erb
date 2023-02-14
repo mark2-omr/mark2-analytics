@@ -1,4 +1,4 @@
-<% @result.category(params[:student_attributes]).each_with_index do |category, i| %>
+<% @result.categories(params[:student_attributes]).each_with_index do |category, i| %>
   <div class="card card-primary">
     <div class="card-header">
       <h5 class="card-title"><%= category[:title] %></h5>
@@ -20,8 +20,9 @@
         <% category[:values].each do |key, value| %>
           <tr>
             <td><%= key %></td>
-            <td align="right"><%= sprintf('%.2f', value.to_f) %> %</td>
+            <td align="right"><%= sprintf("%.2f", value.to_f) %> %</td>
             <td align="right">
+              <%= @survey.aggregated["categories"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["values"][key] %> %
             </td>
           </tr>
         <% end %>

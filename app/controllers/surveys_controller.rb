@@ -105,14 +105,14 @@ class SurveysController < ApplicationController
       @student_attributes.push(options.update(values.invert))
     end
 
-    @compares = [[t("views.all"), [[t("views.all"), "all"]]]]
+    @comparators = [[t("views.all"), [[t("views.all"), "all"]]]]
     @survey.student_attributes.each do |attribute_label, attribute_values|
       next if attribute_label == t("views.class")
       values = Array.new
       attribute_values.each do |attribute_key, attribute_value|
         values.push([attribute_value, "#{attribute_label}-#{attribute_key}"])
       end
-      @compares.push([attribute_label, values])
+      @comparators.push([attribute_label, values])
     end
 
     if params[:commit]
