@@ -25,10 +25,12 @@
             <%= sprintf("%.2f", correct_ratio[:value].to_f) %> %
           </td>
           <td align="right">
-            <%= sprintf("%.2f", correct_ratio[:comparator].to_f) %> %
+            <%= @survey.aggregated["correct_ratios"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["value"] %> %
           </td>
         </tr>
       <% end %>
     </table>
   </div>
 </div>
+
+

@@ -66,7 +66,7 @@
         <% else %>
           <%= form.select :method, [[t("views.analysis.pattern"), "pattern"],
             [t("views.analysis.correct_ratios"), "correct_ratios"],
-            [t("views.analysis.category"), "category"],
+            [t("views.analysis.categories"), "categories"],
             [t("views.analysis.histogram"), "histogram"],
             [t("views.analysis.cross"), "cross"]],
             { selected: params[:method] }, onchange: "this.form.requestSubmit()",
@@ -76,8 +76,8 @@
 
       <div class="mb-3">
         <%= form.label t("views.comparator"), class: "form-label" %>
-        <%= form.select :compare,
-          grouped_options_for_select(@compares, params['compare']),
+        <%= form.select :comparator,
+          grouped_options_for_select(@comparators, params[:comparator]),
           {}, onchange: "this.form.requestSubmit()",
           class: "form-select" %>
       </div>
@@ -94,8 +94,8 @@
     <%= render "patterns" %>
   <% when "correct_ratios" %>
     <%= render "correct_ratios" %>
-  <% when "category" %>
-    <%= render "category" %>
+  <% when "categories" %>
+    <%= render "categories" %>
   <% when "histogram" %>
     <%= render "histogram" %>
   <% when "cross" %>
