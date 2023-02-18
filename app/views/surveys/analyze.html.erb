@@ -22,8 +22,8 @@
     <%= form_with(method: :get, url: analyze_surveys_path) do |form| %>
       <div class="row mb-3">
         <%= form.label t("activerecord.models.survey"),
-          class: "col-sm-3 col-form-label text-end" %>
-        <div class="col-sm-9">
+          class: "col-3 col-form-label text-end" %>
+        <div class="col-9">
           <%= form.select :survey_id, @surveys.pluck(:name, :id),
             { selected: params[:survey_id] }, onchange: "this.form.requestSubmit()",
             class: "form-select" %>
@@ -32,8 +32,8 @@
 
       <div class="row mb-3">
         <%= form.label t("activerecord.attributes.survey.grades"),
-          class: "col-sm-3 col-form-label text-end" %>
-        <div class="col-sm-9">
+          class: "col-3 col-form-label text-end" %>
+        <div class="col-9">
           <%= form.select :grade, @survey.grades.map { |grade|
             [t("views.grade_#{grade}"), grade] },
             { selected: params[:grade] }, onchange: "this.form.requestSubmit()",
@@ -43,8 +43,8 @@
 
       <div class="row mb-3">
         <%= form.label t("activerecord.attributes.survey.subjects"),
-          class: "col-sm-3 col-form-label text-end" %>
-        <div class="col-sm-9">
+          class: "col-3 col-form-label text-end" %>
+        <div class="col-9">
           <%= form.select :subject, @survey.subjects.map { |subject|
             [t("views.subject_#{subject}"), subject] },
             { selected: params[:subject] }, onchange: "this.form.requestSubmit()",
@@ -54,8 +54,8 @@
 
       <div class="row mb-2">
         <%= form.label t("views.attributes"),
-          class: "col-sm-3 col-form-label text-end" %>
-        <div class="col-sm-9">
+          class: "col-3 col-form-label text-end" %>
+        <div class="col-9">
           <% @student_attributes.each_with_index do |options, i| %>
             <%= select_tag("student_attributes[]",
               options_for_select(options, params[:student_attributes].nil? ?
@@ -68,8 +68,8 @@
 
       <div class="row mb-3">
         <%= form.label t("views.analysis_method"),
-          class: "col-sm-3 col-form-label text-end" %>
-        <div class="col-sm-9">
+          class: "col-3 col-form-label text-end" %>
+        <div class="col-9">
           <% if params[:subject] == "6" %>
             <%= form.select :method, [[t("views.analysis.pattern"), "pattern"],
               [t("views.analysis.cross"), "cross"]],
@@ -89,8 +89,8 @@
 
       <div class="row mb-3">
         <%= form.label t("views.comparator"),
-          class: "col-sm-3 col-form-label text-end" %>
-        <div class="col-sm-9">
+          class: "col-3 col-form-label text-end" %>
+        <div class="col-9">
           <%= form.select :comparator,
             grouped_options_for_select(@comparators, params[:comparator]),
             {}, onchange: "this.form.requestSubmit()",
