@@ -24,7 +24,7 @@ ja:
     attributes: "属性情報"
     analysis_method: "分析方法"
     analysis:
-      pattern: "回答状況"
+      patterns: "回答状況"
       correct_ratios: "正答率"
       categories: "カテゴリー"
       histogram: "正答数ヒストグラム"

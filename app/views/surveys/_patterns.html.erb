@@ -1,0 +1,10 @@
+<% @result.patterns(params[:student_attributes]).each_with_index do |pattern, i| %>
+  <div class="card mb-3">
+    <div class="card-header">
+      <%= pattern[:label] %>
+    </div>
+    <div class="card-body">
+      <%= pattern[:options] %>
+    </div>
+  </div>
+<% end %>

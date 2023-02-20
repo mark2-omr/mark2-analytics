@@ -84,6 +84,50 @@ class Result < ApplicationRecord
     return selected_results
   end
 
+  def patterns(student_attributes = [])
+    questions = self.survey.questions["#{self.grade}-#{self.subject}"]
+    selected_results = self.filter(student_attributes)
+
+    outputs = Array.new
+    questions.each_with_index do |question, i|
+      hash = { label: question["label"], options: Hash.new }
+
+      if question["options"].size == 1
+        question["options"].first["50"] = "無回答"
+        question["options"].first.each do |key, value|
+          count = 0
+          selected_results.each do |selected_result|
+            count += 1 if selected_result["values"][i].first == key.to_i
+          end
+
+          # （試験データ登録時のエクセル浮動小数点対応）
+          value = value.to_i if value.include?(".0")
+          hash[:options][value] = count
+        end
+      else
+        selected_results.each do |selected_result|
+          next if selected_result["values"][i].include?(99)
+
+          key = String.new
+          selected_result["values"][i].each_with_index do |value, j|
+            key += "-" unless j == 0
+            key += value.to_s
+          end
+
+          if hash[:options].key?(key)
+            hash[:options][key] += 1
+          else
+            hash[:options][key] = 1
+          end
+        end
+      end
+
+      outputs.push(hash)
+    end
+
+    return outputs
+  end
+
   def correct_ratios(student_attributes = [])
     questions = self.survey.questions["#{self.grade}-#{self.subject}"]
     selected_results = self.filter(student_attributes)
