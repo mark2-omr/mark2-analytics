@@ -71,12 +71,12 @@
           class: "col-3 col-form-label text-end" %>
         <div class="col-9">
           <% if params[:subject] == "6" %>
-            <%= form.select :method, [[t("views.analysis.pattern"), "pattern"],
+            <%= form.select :method, [[t("views.analysis.patterns"), "patterns"],
               [t("views.analysis.cross"), "cross"]],
               { selected: params[:method] }, onchange: "this.form.requestSubmit()",
               class: "form-select" %>
           <% else %>
-            <%= form.select :method, [[t("views.analysis.pattern"), "pattern"],
+            <%= form.select :method, [[t("views.analysis.patterns"), "patterns"],
               [t("views.analysis.correct_ratios"), "correct_ratios"],
               [t("views.analysis.categories"), "categories"],
               [t("views.analysis.histogram"), "histogram"],
