@@ -24,6 +24,7 @@ namespace :survey do
               subject: subject,
               converted: selected_results,
             )
+          patterns["#{grade}-#{subject}-all"] = result.patterns
           correct_ratios["#{grade}-#{subject}-all"] = result.correct_ratios
           categories["#{grade}-#{subject}-all"] = result.categories
 
@@ -37,6 +38,9 @@ namespace :survey do
               student_attributes = Array.new(survey.student_attributes.size, 0)
               student_attributes[i] = key
 
+              patterns[
+                "#{grade}-#{subject}-#{student_attribute_label}-#{key}"
+              ] = result.patterns(student_attributes)
               correct_ratios[
                 "#{grade}-#{subject}-#{student_attribute_label}-#{key}"
               ] = result.correct_ratios(student_attributes)
@@ -48,6 +52,7 @@ namespace :survey do
         end
 
         survey.aggregated = {
+          patterns: patterns,
           correct_ratios: correct_ratios,
           categories: categories,
         }
