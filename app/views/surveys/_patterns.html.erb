@@ -4,7 +4,12 @@
       <%= pattern[:label] %>
     </div>
     <div class="card-body">
-      <%= pattern[:options] %>
+      <div class="row">
+        <%= image_tag("data:image/jpeg;base64,#{Result.pie(pattern[:options])}",
+          class: "col-6") %>
+        <%= image_tag("data:image/jpeg;base64,#{Result.pie(@survey.aggregated["patterns"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["options"])}",
+          class: "col-6") %>
+      </div>
     </div>
   </div>
 <% end %>
