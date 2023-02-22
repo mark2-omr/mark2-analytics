@@ -1,0 +1,13 @@
+<div class="card mb-3">
+  <div class="card-header">
+    <%= t("views.analysis.histogram") %>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <%= image_tag("data:image/jpeg;base64,#{Result.bar(@result.histogram(params[:student_attributes]))}",
+        class: "col-6") %>
+      <%= image_tag("data:image/jpeg;base64,#{Result.bar(@survey.aggregated["histograms"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"])}",
+        class: "col-6") %>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@ namespace :survey do
     Survey
       .where(submittable: true)
       .each do |survey|
-        patterns, correct_ratios, categories, histogram =
+        patterns, correct_ratios, categories, histograms =
           Hash.new,
           Hash.new,
           Hash.new,
@@ -27,6 +27,7 @@ namespace :survey do
           patterns["#{grade}-#{subject}-all"] = result.patterns
           correct_ratios["#{grade}-#{subject}-all"] = result.correct_ratios
           categories["#{grade}-#{subject}-all"] = result.categories
+          histograms["#{grade}-#{subject}-all"] = result.histogram
 
           # Aggregation for Student Attibutes
           survey
@@ -47,6 +48,9 @@ namespace :survey do
               categories[
                 "#{grade}-#{subject}-#{student_attribute_label}-#{key}"
               ] = result.categories(student_attributes)
+              histograms[
+                "#{grade}-#{subject}-#{student_attribute_label}-#{key}"
+              ] = result.histogram(student_attributes)
             end
           end
         end
@@ -55,6 +59,7 @@ namespace :survey do
           patterns: patterns,
           correct_ratios: correct_ratios,
           categories: categories,
+          histograms: histograms,
         }
         survey.save
       end
