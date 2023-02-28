@@ -116,13 +116,17 @@ class SurveysController < ApplicationController
     end
 
     if params[:commit]
-      @result =
-        Result.where(
-          user_id: current_user.id,
-          survey_id: @survey.id,
-          grade: params[:grade],
-          subject: params[:subject],
-        ).first
+      if params[:method] == "cross"
+        @cross = @survey.cross(params[:cross1], params[:cross2])
+      else
+        @result =
+          Result.where(
+            user_id: current_user.id,
+            survey_id: @survey.id,
+            grade: params[:grade],
+            subject: params[:subject],
+          ).first
+      end
     end
   end
 
