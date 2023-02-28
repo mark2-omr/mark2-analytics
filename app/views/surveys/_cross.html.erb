@@ -1,0 +1,14 @@
+<table class="table table-striped table-bordered" style="table-layout: fixed;">
+  <tr>
+    <th></th>
+    <% @cross[:options2].each do |key, value| %>
+      <th><%= value %></th>
+    <% end %>
+  </tr>
+  <% @cross[:options2].each do |key, value| %>
+    <tr>
+      <th><%= value %></th>
+    </tr>
+  <% end %>
+</table>
+

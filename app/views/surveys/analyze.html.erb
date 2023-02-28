@@ -87,16 +87,33 @@
         </div>
       </div>
 
-      <div class="row mb-3">
-        <%= form.label t("views.comparator"),
-          class: "col-3 col-form-label text-end" %>
-        <div class="col-9">
-          <%= form.select :comparator,
-            grouped_options_for_select(@comparators, params[:comparator]),
-            {}, onchange: "this.form.requestSubmit()",
-            class: "form-select" %>
+      <% if params[:method] == "cross" %>
+        <div class="row mb-3">
+          <%= form.label t("views.analysis.cross"),
+            class: "col-3 col-form-label text-end" %>
+          <div class="col-9">
+            <%= form.select :cross1,
+              options_for_select(@survey.cross_questions, params[:cross1]),
+              {}, onchange: "this.form.requestSubmit()",
+              class: "form-select mb-2" %>
+            <%= form.select :cross2,
+              options_for_select(@survey.cross_questions, params[:cross2]),
+              {}, onchange: "this.form.requestSubmit()",
+              class: "form-select mb-2" %>
+          </div>
         </div>
-      </div>
+      <% else %>
+        <div class="row mb-3">
+          <%= form.label t("views.comparator"),
+            class: "col-3 col-form-label text-end" %>
+          <div class="col-9">
+            <%= form.select :comparator,
+              grouped_options_for_select(@comparators, params[:comparator]),
+              {}, onchange: "this.form.requestSubmit()",
+              class: "form-select" %>
+          </div>
+        </div>
+      <% end %>
 
       <div class="tb-3">
         <%= form.submit class: "btn btn-primary col-4 offset-4" %>

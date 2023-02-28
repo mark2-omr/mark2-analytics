@@ -104,4 +104,60 @@ class Survey < ApplicationRecord
     end
     self.student_attributes = student_attributes
   end
+
+  def cross_questions(grade = 0)
+    options = Array.new
+    self.questions.each do |key, values|
+      if key.split("-")[1] != "6"
+        label =
+          I18n.t("views.grade_#{key.split("-")[0]}") + " " +
+            I18n.t("views.subject_#{key.split("-")[1]}") + " 正答率グループ"
+        options.push([label, key + "-0"])
+      end
+      values.each_with_index do |value, i|
+        label =
+          I18n.t("views.grade_#{key.split("-")[0]}") + " " +
+            I18n.t("views.subject_#{key.split("-")[1]}") + " " + value["label"]
+        options.push([label, key + "-" + (i + 1).to_s])
+      end
+    end
+
+    return options
+  end
+
+  def cross_options(cross_param)
+    cross_params = cross_param.split("-")
+
+    if cross_params[2] == "0"
+      return(
+        {
+          "1" => "正答率グループ1",
+          "2" => "正答率グループ2",
+          "3" => "正答率グループ3",
+          "4" => "正答率グループ4",
+        }
+      )
+    end
+
+    options =
+      self.questions["#{cross_params[0]}-#{cross_params[1]}"][
+        cross_params[2].to_i
+      ][
+        "options"
+      ]
+
+    if options.size > 1
+      return({ "1" => "正解", "2" => "不正解" })
+    else
+      return options[0]
+    end
+  end
+
+  def cross(cross1, cross2)
+    hash = Hash.new
+    options1 = self.cross_options(cross1)
+    options2 = self.cross_options(cross2)
+
+    return { options1: options1, options2: options2 }
+  end
 end
