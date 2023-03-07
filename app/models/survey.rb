@@ -125,10 +125,8 @@ class Survey < ApplicationRecord
     return options
   end
 
-  def cross_options(cross_param)
-    cross_params = cross_param.split("-")
-
-    if cross_params[2] == "0"
+  def cross_options(grade, subject, question_number)
+    if question_number == 0
       return(
         {
           "1" => "正答率グループ1",
@@ -139,12 +137,7 @@ class Survey < ApplicationRecord
       )
     end
 
-    options =
-      self.questions["#{cross_params[0]}-#{cross_params[1]}"][
-        cross_params[2].to_i
-      ][
-        "options"
-      ]
+    options = self.questions["#{grade}-#{subject}"][question_number]["options"]
 
     if options.size > 1
       return({ "1" => "正解", "2" => "不正解" })
@@ -153,11 +146,52 @@ class Survey < ApplicationRecord
     end
   end
 
-  def cross(cross1, cross2)
-    hash = Hash.new
-    options1 = self.cross_options(cross1)
-    options2 = self.cross_options(cross2)
+  def cross_count(results, grade, subject, question_number)
+    count = Hash.new
+    results.each do |student|
+      key =
+        "#{student["student_attributes"].values.join("-")}-#{student["number"]}"
+      if question_number == "0"
+        # 正答率グループ
+      elsif self.questions["#{grade}-#{subject}"][question_number - 1][
+            "corrects"
+          ].size > 1
+        # 完全解
+      else
+        count[key] = student["values"][question_number - 1].first
+      end
+    end
 
-    return { options1: options1, options2: options2 }
+    return count
+  end
+
+  def cross(cross1, cross2, student_attributes)
+    grade1, subject1, question_number1 = cross1.split("-").map!(&:to_i)
+    grade2, subject2, question_number2 = cross2.split("-").map!(&:to_i)
+
+    options1 = self.cross_options(grade1, subject1, question_number1)
+    options2 = self.cross_options(grade2, subject2, question_number2)
+
+    result = Result.find_by(grade: grade1, subject: subject1)
+    results1 = result.filter(student_attributes)
+    result = Result.find_by(grade: grade2, subject: subject2)
+    results2 = result.filter(student_attributes)
+
+    count1 = self.cross_count(results1, grade1, subject1, question_number1)
+    count2 = self.cross_count(results2, grade2, subject2, question_number2)
+
+    results = Hash.new
+    count1.each do |key, value|
+      if count2.key?(key)
+        cross_key = "#{count1[key]}-#{count2[key]}"
+        if results.key?(cross_key)
+          results[cross_key] += 1
+        else
+          results[cross_key] = 1
+        end
+      end
+    end
+
+    return { options1: options1, options2: options2, results: results }
   end
 end

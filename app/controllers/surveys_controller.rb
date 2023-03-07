@@ -117,7 +117,12 @@ class SurveysController < ApplicationController
 
     if params[:commit]
       if params[:method] == "cross"
-        @cross = @survey.cross(params[:cross1], params[:cross2])
+        @cross =
+          @survey.cross(
+            params[:cross1],
+            params[:cross2],
+            params[:student_attributes],
+          )
       else
         @result =
           Result.where(
