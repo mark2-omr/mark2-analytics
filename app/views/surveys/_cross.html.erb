@@ -1,13 +1,18 @@
 <table class="table table-striped table-bordered" style="table-layout: fixed;">
   <tr>
     <th></th>
-    <% @cross[:options2].each do |key, value| %>
-      <th><%= value %></th>
+    <% @cross[:options2].each do |key2, value2| %>
+      <th><%= value2 %></th>
     <% end %>
   </tr>
-  <% @cross[:options2].each do |key, value| %>
+  <% @cross[:options1].each do |key1, value1| %>
     <tr>
-      <th><%= value %></th>
+      <th><%= value1 %></th>
+      <% @cross[:options2].each do |key2, value2| %>
+        <td class="text-end">
+          <%= @cross[:results]["#{key1}-#{key2}"] %>
+        </td>
+      <% end %>
     </tr>
   <% end %>
 </table>
