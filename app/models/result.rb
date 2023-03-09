@@ -128,7 +128,7 @@ class Result < ApplicationRecord
     return outputs
   end
 
-  def correct_ratios(student_attributes = [])
+  def correct_rates(student_attributes = [])
     questions = self.survey.questions["#{self.grade}-#{self.subject}"]
     selected_results = self.filter(student_attributes)
 
