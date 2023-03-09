@@ -122,6 +122,7 @@ class SurveysController < ApplicationController
             params[:cross1],
             params[:cross2],
             params[:student_attributes],
+            current_user,
           )
       else
         @result =

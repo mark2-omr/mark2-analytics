@@ -111,7 +111,8 @@ class Survey < ApplicationRecord
       if key.split("-")[1] != "6"
         label =
           I18n.t("views.grade_#{key.split("-")[0]}") + " " +
-            I18n.t("views.subject_#{key.split("-")[1]}") + " 正答率グループ"
+            I18n.t("views.subject_#{key.split("-")[1]}") + " " +
+            I18n.t("views.analysis.correct_rates_group")
         options.push([label, key + "-0"])
       end
       values.each_with_index do |value, i|
@@ -129,10 +130,10 @@ class Survey < ApplicationRecord
     if question_number == 0
       return(
         {
-          "1" => "正答率グループ1",
-          "2" => "正答率グループ2",
-          "3" => "正答率グループ3",
-          "4" => "正答率グループ4",
+          "1" => "#{I18n.t("views.analysis.correct_rates_group")} 1",
+          "2" => "#{I18n.t("views.analysis.correct_rates_group")} 2",
+          "3" => "#{I18n.t("views.analysis.correct_rates_group")} 3",
+          "4" => "#{I18n.t("views.analysis.correct_rates_group")} 4",
         }
       )
     end
@@ -140,7 +141,12 @@ class Survey < ApplicationRecord
     options = self.questions["#{grade}-#{subject}"][question_number]["options"]
 
     if options.size > 1
-      return({ "1" => "正解", "2" => "不正解" })
+      return(
+        {
+          "1" => I18n.t("views.analysis.correct"),
+          "2" => I18n.t("views.analysis.incorrect"),
+        }
+      )
     else
       return options[0]
     end
@@ -148,15 +154,53 @@ class Survey < ApplicationRecord
 
   def cross_count(results, grade, subject, question_number)
     count = Hash.new
+
+    if question_number == 0
+      correct_counts = Array.new
+
+      p "#{grade}-#{subject}"
+      questions = self.questions["#{grade}-#{subject}"]
+      results.each do |student|
+        correct_count = 0
+        student["values"].each_with_index do |answer, i|
+          correct_count += 1 if answer == questions[i]["corrects"]
+        end
+        correct_counts.push(correct_count)
+      end
+      correct_counts.sort!
+    end
+
     results.each do |student|
       key =
         "#{student["student_attributes"].values.join("-")}-#{student["number"]}"
-      if question_number == "0"
-        # 正答率グループ
+      if question_number == 0
+        # Correct rate group
+        correct_count = 0
+        questions = self.questions["#{grade}-#{subject}"]
+        student["values"].each_with_index do |answer, i|
+          correct_count += 1 if answer == questions[i]["corrects"]
+        end
+
+        if correct_count >= correct_counts[(correct_counts.size * 0.75).to_i]
+          count[key] = 1
+        elsif correct_count >= correct_counts[(correct_counts.size * 0.5).to_i]
+          count[key] = 2
+        elsif correct_count >= correct_counts[(correct_counts.size * 0.25).to_i]
+          count[key] = 3
+        else
+          count[key] = 4
+        end
       elsif self.questions["#{grade}-#{subject}"][question_number - 1][
             "corrects"
           ].size > 1
-        # 完全解
+        # Consists of multiple questions
+        if self.questions["#{grade}-#{subject}"][question_number - 1][
+             "corrects"
+           ] == student["values"][question_number - 1]
+          count[key] = 1
+        else
+          count[key] = 2
+        end
       else
         count[key] = student["values"][question_number - 1].first
       end
@@ -165,16 +209,30 @@ class Survey < ApplicationRecord
     return count
   end
 
-  def cross(cross1, cross2, student_attributes)
+  def cross(cross1, cross2, student_attributes, current_user)
     grade1, subject1, question_number1 = cross1.split("-").map!(&:to_i)
     grade2, subject2, question_number2 = cross2.split("-").map!(&:to_i)
 
     options1 = self.cross_options(grade1, subject1, question_number1)
     options2 = self.cross_options(grade2, subject2, question_number2)
 
-    result = Result.find_by(grade: grade1, subject: subject1)
+    result =
+      Result.find_by(
+        user_id: current_user.id,
+        survey_id: self.id,
+        grade: grade1,
+        subject: subject1,
+      )
+    return nil unless result
     results1 = result.filter(student_attributes)
-    result = Result.find_by(grade: grade2, subject: subject2)
+    result =
+      Result.find_by(
+        user_id: current_user.id,
+        survey_id: self.id,
+        grade: grade2,
+        subject: subject2,
+      )
+    return nil unless result
     results2 = result.filter(student_attributes)
 
     count1 = self.cross_count(results1, grade1, subject1, question_number1)
