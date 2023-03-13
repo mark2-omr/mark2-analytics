@@ -22,10 +22,11 @@
             <%= correct_ratio[:question] %>
           </td>
           <td align="right">
-            <%= sprintf("%.2f", correct_ratio[:value].to_f) %> %
+            <%= format("%.2f", correct_ratio[:value].round(2)) %> %
           </td>
           <td align="right">
-            <%= @survey.aggregated["correct_rates"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["value"] %> %
+            <%= format("%.2f",
+              @survey.aggregated["correct_rates"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["value"].round(2)) %> %
           </td>
         </tr>
       <% end %>

@@ -10,19 +10,22 @@
             <%= category[:title] %>
           </th>
           <th class="col-sm-3 text-center">
-            <%= t("views.analysis.correct_ratios") %>
+            <%= t("views.analysis.correct_rates") %>
           </th>
           <th class="col-sm-3 text-center">
-            <%= t("views.analysis.correct_ratios") %>
+            <%= t("views.analysis.correct_rates") %>
             (<%= t("views.comparator") %>)
           </th>
         </tr>
         <% category[:values].each do |key, value| %>
           <tr>
             <td><%= key %></td>
-            <td align="right"><%= sprintf("%.2f", value.to_f) %> %</td>
             <td align="right">
-              <%= @survey.aggregated["categories"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["values"][key] %> %
+              <%= format("%.2f", value.round(2)) %> %
+            </td>
+            <td align="right">
+              <%= format("%.2f", 
+                @survey.aggregated["categories"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["values"][key].round(2)) %> %
             </td>
           </tr>
         <% end %>

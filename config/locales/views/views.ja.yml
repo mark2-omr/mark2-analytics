@@ -32,6 +32,7 @@ ja:
       correct_rates_group: "正答率グループ"
       correct: "正解"
       incorrect: "不正解"
+      data_not_found: "データは登録されていません。"
 
     school: "学校"
     comparator: "比較対象"
