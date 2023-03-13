@@ -123,15 +123,19 @@
 </div>
 
 <% if params[:commit] %>
-  <% case params[:method] when "patterns" %>
+  <% if params[:method] == "patterns" and @result %>
     <%= render "patterns" %>
-  <% when "correct_rates" %>
+  <% elsif params[:method] == "correct_rates" and @result %>
     <%= render "correct_rates" %>
-  <% when "categories" %>
+  <% elsif params[:method] == "categories" and @result %>
     <%= render "categories" %>
-  <% when "histogram" %>
+  <% elsif params[:method] == "histogram" and @result %>
     <%= render "histogram" %>
-  <% when "cross" %>
+  <% elsif params[:method] == "cross" and @cross %>
     <%= render "cross" %>
+  <% else %>
+    <div class="alert alert-danger">
+      <%= t("messages.analysis_data_not_found") %>
+    </div>
   <% end %>
 <% end %>
