@@ -252,4 +252,19 @@ class Survey < ApplicationRecord
 
     return { options1: options1, options2: options2, results: results }
   end
+
+  def self.pattern_chart(options)
+    params = { type: "pie", values: options.values, labels: options.keys }
+
+    return params
+  end
+
+  def self.histogram_chart(values)
+    outputs = []
+    values.each_with_index do |value, i|
+      outputs.push([i.to_s, value])
+    end
+
+    return outputs
+  end
 end

@@ -4,10 +4,12 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <%= image_tag("data:image/jpeg;base64,#{Result.bar(@result.histogram(params[:student_attributes]))}",
-        class: "col-6") %>
-      <%= image_tag("data:image/jpeg;base64,#{Result.bar(@survey.aggregated["histograms"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"])}",
-        class: "col-6") %>
+      <%= column_chart(
+        Survey.histogram_chart(@result.histogram(params[:student_attributes])),
+        width: "1280px", height: "500px") %>
+      <%= column_chart(
+        Survey.histogram_chart(@survey.aggregated["histograms"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"]),
+        width: "1280px", height: "500px") %>
     </div>
   </div>
 </div>

@@ -5,10 +5,8 @@
     </div>
     <div class="card-body">
       <div class="row">
-        <%= image_tag("data:image/jpeg;base64,#{Result.pie(pattern[:options])}",
-          class: "col-6") %>
-        <%= image_tag("data:image/jpeg;base64,#{Result.pie(@survey.aggregated["patterns"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["options"])}",
-          class: "col-6") %>
+        <%= pie_chart pattern[:options] %>
+        <%= pie_chart @survey.aggregated["patterns"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["options"] %>
       </div>
     </div>
   </div>
