@@ -63,7 +63,8 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 
-  gem "prettier"
+  gem "rubocop"
+  gem "rubocop-rails"
 end
 
 group :test do
@@ -79,3 +80,4 @@ gem "omniauth-auth0"
 gem "omniauth-rails_csrf_protection"
 gem "roo"
 gem "rubyXL"
+gem "chartkick"

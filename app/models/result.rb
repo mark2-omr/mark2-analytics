@@ -213,35 +213,4 @@ class Result < ApplicationRecord
 
     return outputs
   end
-
-  def self.pie(options)
-    headers = {
-      "Content-Type": "application/json",
-      "Ocp-Apim-Subscription-Key":
-        Rails.application.credentials.azure.api_management.subscription_key,
-    }
-    params = { type: "pie", values: options.values, labels: options.keys }
-    uri = URI.parse("https://api.defrag.works/charts/v1")
-    response = Net::HTTP.post(uri, params.to_json, headers)
-
-    return Base64.strict_encode64(response.body)
-  end
-
-  def self.bar(values)
-    headers = {
-      "Content-Type": "application/json",
-      "Ocp-Apim-Subscription-Key":
-        Rails.application.credentials.azure.api_management.subscription_key,
-    }
-
-    params = {
-      type: "bar",
-      values: values,
-      labels: [*0...values.size].map(&:to_s),
-    }
-    uri = URI.parse("https://api.defrag.works/charts/v1")
-    response = Net::HTTP.post(uri, params.to_json, headers)
-
-    return Base64.strict_encode64(response.body)
-  end
 end
