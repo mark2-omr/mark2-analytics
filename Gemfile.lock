@@ -92,6 +92,10 @@ GEM
     faraday-net_http (3.0.2)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    haml (6.1.1)
+      temple (>= 0.8.2)
+      thor
+      tilt
     hashie (5.0.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
@@ -164,6 +168,11 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     pg (1.4.6)
+    prettier (3.2.2)
+      syntax_tree (>= 2.7.1)
+      syntax_tree-haml (>= 1.1.0)
+      syntax_tree-rbs (>= 0.2.0)
+    prettier_print (1.2.1)
     public_suffix (5.0.1)
     puma (5.6.5)
       nio4r (~> 2.0)
@@ -200,6 +209,7 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    rbs (3.0.4)
     redis (4.8.1)
     regexp_parser (2.7.0)
     rexml (3.2.5)
@@ -227,7 +237,19 @@ GEM
       sprockets (>= 3.0.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
+    syntax_tree (6.0.2)
+      prettier_print (>= 1.2.0)
+    syntax_tree-haml (4.0.3)
+      haml (>= 5.2)
+      prettier_print (>= 1.2.1)
+      syntax_tree (>= 6.0.0)
+    syntax_tree-rbs (1.0.0)
+      prettier_print
+      rbs
+      syntax_tree (>= 2.0.1)
+    temple (0.10.0)
     thor (1.2.1)
+    tilt (2.1.0)
     timeout (0.3.2)
     turbo-rails (1.4.0)
       actionpack (>= 6.0.0)
@@ -267,6 +289,7 @@ DEPENDENCIES
   omniauth-auth0
   omniauth-rails_csrf_protection
   pg (~> 1.1)
+  prettier
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
   redis (~> 4.0)
