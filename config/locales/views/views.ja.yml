@@ -32,6 +32,8 @@ ja:
       correct_rates_group: "正答率グループ"
       correct: "正解"
       incorrect: "不正解"
+      number_of_people: "人数"
+      number_of_corrects: "正答数"
       data_not_found: "データは登録されていません。"
 
     school: "学校"
@@ -42,8 +44,6 @@ ja:
 
     answer: "回答"
     question: "設問"
-    number_of_people: "人数"
-    number_of_corrects: "正答数"
 
     grade_1: "小学1年"
     grade_2: "小学2年"
