@@ -5,8 +5,16 @@
     </div>
     <div class="card-body">
       <div class="row">
-        <%= pie_chart pattern[:options] %>
-        <%= pie_chart @survey.aggregated["patterns"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["options"] %>
+        <div class="col-6">
+          <%= pie_chart pattern[:options],
+            title: t("views.school"),
+            download: {background: "#ffffff"} %>
+        </div>
+        <div class="col-6">
+          <%= pie_chart @survey.aggregated["patterns"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["options"],
+            title: t("views.comparator"),
+            download: {background: "#ffffff"} %>
+        </div>
       </div>
     </div>
   </div>
