@@ -7,35 +7,37 @@
         <% end %>
       </li>
       <li class="breadcrumb-item">
-        <%= link_to groups_path do %>
+        <%= link_to admin_groups_path do %>
           <%= t("activerecord.models.group") %>
         <% end %>
       </li>
       <li class="breadcrumb-item">
-        <%= link_to @user.group do %>
+        <%= link_to admin_group_path(@user.group) do %>
           <%= @user.group.name %>
         <% end %>
       </li>
       <li class="breadcrumb-item">
-        <%= link_to users_path(group_id: @user.group_id) do %>
+        <%= link_to admin_users_path(group_id: @user.group_id) do %>
           <%= t("activerecord.models.user") %>
         <% end %>
       </li>
+      <li class="breadcrumb-item">
+        <%= link_to admin_user_path(@user) do %>
+          <%= @user.name %>
+        <% end %>
+      </li>
       <li class="breadcrumb-item active" aria-current="page">
-        <%= @user.name %>
+        <%= t("views.edit_user") %>
       </li>
     </ol>
   </nav>
 </div>
 
-<%= render @user %>
-
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap mt-3">
-  <%= link_to edit_user_path(@user), class: "btn btn-warning" do %>
-    <i class="bi bi-pencil"></i> <%= t("views.edit") %>
-  <% end %>
-  <%= button_to @user, method: :delete, class: "btn btn-danger",
-    data: { turbo_confirm: t("messages.confirm_deletion") } do %>
-    <i class="bi bi-trash"></i> <%= t("views.delete") %>
-  <% end %>
+<div class="card">
+  <div class="card-header">
+    <%= t("views.edit_user") %>
+  </div>
+  <div class="card-body">
+    <%= render "form", user: @user %>
+  </div>
 </div>

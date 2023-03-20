@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Admin::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :admin_required
   before_action :set_user, only: %i[show edit update destroy]
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         format.html do
-          redirect_to user_url(@user), notice: t("messages.user_created")
+          redirect_to admin_user_url(@user), notice: t('messages.user_created')
         end
         format.json { render :show, status: :created, location: @user }
       else
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         format.html do
-          redirect_to user_url(@user), notice: t("messages.user_updated")
+          redirect_to admin_user_url(@user), notice: t('messages.user_updated')
         end
         format.json { render :show, status: :ok, location: @user }
       else
@@ -60,8 +60,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to users_url(group_id: @user.group_id),
-                    notice: t("messages.user_destroyed")
+        redirect_to admin_users_url(group_id: @user.group_id),
+                    notice: t('messages.user_destroyed')
       end
       format.json { head :no_content }
     end

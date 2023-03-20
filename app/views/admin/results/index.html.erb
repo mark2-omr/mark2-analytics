@@ -1,0 +1,73 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to root_path do %>
+          <i class="bi bi-house-door"></i>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item" aria-current="page">
+        <%= link_to surveys_path do %>
+          <%= t("activerecord.models.survey") %>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item">
+        <%= link_to @survey.name, @survey %>
+      </li>
+      <li class="breadcrumb-item" aria-current="page">
+        <%= link_to t('views.submission_status'), users_survey_path(@survey) %>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <%= @user.name %>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<div id="<%= dom_id @survey %>" class="card">
+  <div class="card-header">
+    <%= @survey.name %>
+  </div>
+  <div class="card-body">
+    <% if @results.count > 0 %>
+      <% @results.each do |result| %>
+        <div class="card border-success mb-3">
+          <div class="card-header text-white bg-success">
+            <%= t("views.grade_#{result.grade}") %> <%= t("views.subject_#{result.subject}") %>
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <% result.messages.each do |message| %>
+                <li class="list-group-item">
+                  <%= message %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          <% if @survey.submittable %>
+            <div class="card-footer">
+              <div class="d-flex justify-content-between flex-wrap flex-md-nowrap">
+                <%= link_to download_admin_result_path(result), class: "btn btn-primary" do %>
+                  <i class="bi bi-download"></i> <%= t("views.download") %>
+                <% end %>
+                <%= button_to admin_result_path(result), method: :delete, class: "btn btn-danger",
+                  data: { turbo_confirm: t("messages.confirm_deletion") } do %>
+                    <i class="bi bi-trash"></i> <%= t("views.delete") %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="alert alert-danger" role="alert">
+        <%= t("views.no_data") %>
+      </div>
+    <% end %>
+  </div>
+  <div class="card-footer">
+    <%= link_to new_admin_result_path(survey_id: @survey.id, user_id: @user.id), class: "btn btn-primary" do %>
+      <i class="bi bi-plus-lg"></i> <%= t("views.new_result") %>
+    <% end %>
+  </div>
+</div>

@@ -114,12 +114,12 @@
                 <% if current_user.admin %>
                   <li class="nav-item">
                     <% if params[:controller] == "groups" %>
-                      <%= link_to groups_path, class: "nav-link active" do %>
+                      <%= link_to admin_groups_path, class: "nav-link active" do %>
                         <i class="bi bi-box-fill"></i>
                         <%= t("activerecord.models.group") %>
                       <% end %>
                     <% else %>
-                      <%= link_to groups_path, class: "nav-link" do %>
+                      <%= link_to admin_groups_path, class: "nav-link" do %>
                         <i class="bi bi-box"></i>
                         <%= t("activerecord.models.group") %>
                       <% end %>

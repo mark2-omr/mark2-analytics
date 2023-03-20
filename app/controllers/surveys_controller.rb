@@ -1,7 +1,7 @@
 class SurveysController < ApplicationController
   before_action :authenticate_user!
   before_action :set_survey,
-                only: %i[show edit update destroy download_definition]
+                only: %i[show edit update destroy users download_definition]
 
   # GET /surveys or /surveys.json
   def index
@@ -13,7 +13,7 @@ class SurveysController < ApplicationController
     unless current_user.manager
       @results =
         Result.where(survey_id: @survey.id, user_id: current_user.id).order(
-          "grade ASC, subject ASC",
+          'grade ASC, subject ASC'
         )
     end
   end
@@ -37,7 +37,7 @@ class SurveysController < ApplicationController
     respond_to do |format|
       if @survey.save
         format.html do
-          redirect_to survey_url(@survey), notice: t("messages.survey_created")
+          redirect_to survey_url(@survey), notice: t('messages.survey_created')
         end
         format.json { render :show, status: :created, location: @survey }
       else
@@ -62,7 +62,7 @@ class SurveysController < ApplicationController
         end
 
         format.html do
-          redirect_to survey_url(@survey), notice: t("messages.survey_updated")
+          redirect_to survey_url(@survey), notice: t('messages.survey_updated')
         end
         format.json { render :show, status: :ok, location: @survey }
       else
@@ -80,10 +80,14 @@ class SurveysController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to surveys_url, notice: t("messages.survey_destroyed")
+        redirect_to surveys_url, notice: t('messages.survey_destroyed')
       end
       format.json { head :no_content }
     end
+  end
+
+  def users
+    @users = User.where(group_id: @survey.group_id, manager: false)
   end
 
   def download_definition
@@ -105,10 +109,11 @@ class SurveysController < ApplicationController
       @student_attributes.push(options.update(values.invert))
     end
 
-    @comparators = [[t("views.all"), [[t("views.all"), "all"]]]]
+    @comparators = [[t('views.all'), [[t('views.all'), 'all']]]]
     @survey.student_attributes.each do |attribute_label, attribute_values|
-      next if attribute_label == t("views.class")
-      values = Array.new
+      next if attribute_label == t('views.class')
+
+      values = []
       attribute_values.each do |attribute_key, attribute_value|
         values.push([attribute_value, "#{attribute_label}-#{attribute_key}"])
       end
@@ -116,7 +121,7 @@ class SurveysController < ApplicationController
     end
 
     if params[:commit]
-      if params[:method] == "cross"
+      if params[:method] == 'cross'
         @cross =
           @survey.cross(
             params[:cross1],
@@ -157,7 +162,7 @@ class SurveysController < ApplicationController
       :student_attributes,
       :submittable,
       :aggregated,
-      :merged,
+      :merged
     )
   end
 end

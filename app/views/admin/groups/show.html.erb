@@ -7,7 +7,7 @@
         <% end %>
       </li>
       <li class="breadcrumb-item">
-        <%= link_to groups_path do %>
+        <%= link_to admin_groups_path do %>
           <%= t("activerecord.models.group") %>
         <% end %>
       </li>
@@ -21,10 +21,10 @@
 <%= render @group %>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap mt-3">
-  <%= link_to edit_group_path(@group), class: "btn btn-warning" do %>
+  <%= link_to edit_admin_group_path(@group), class: "btn btn-warning" do %>
     <i class="bi bi-pencil"></i> <%= t("views.edit") %>
   <% end %>
-  <%= button_to @group, method: :delete, class: "btn btn-danger",
+  <%= button_to admin_group_path(@group), method: :delete, class: "btn btn-danger",
     data: { turbo_confirm: t("messages.confirm_deletion") } do %>
     <i class="bi bi-trash"></i> <%= t("views.delete") %>
   <% end %>

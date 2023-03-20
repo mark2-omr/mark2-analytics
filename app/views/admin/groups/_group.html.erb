@@ -10,7 +10,7 @@
       </tr>
     </table>
 
-    <%= link_to users_path(group_id: @group.id), class: "btn btn-primary" do %>
+    <%= link_to admin_users_path(group_id: @group.id), class: "btn btn-primary" do %>
       <i class="bi bi-person-fill"></i> <%= t("activerecord.models.user") %>
     <% end %>
   </div>

@@ -12,6 +12,10 @@ class User < ApplicationRecord
     end
   end
 
+  def result_count(survey_id, verified)
+    return Result.where(survey_id: survey_id, user_id: self.id, verified: verified).count
+  end
+
   private
 
   def auth0_token
