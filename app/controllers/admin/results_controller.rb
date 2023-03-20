@@ -1,10 +1,11 @@
-class ResultsController < ApplicationController
+class Admin::ResultsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_result, only: %i[show edit update destroy download]
+  before_action :set_survey_and_user, only: %i[ index new ]
 
   # GET /results or /results.json
   def index
-    @results = Result.all
+    @results = Result.where(survey_id: @survey.id, user_id: @user.id).order('grade ASC, subject ASC')
   end
 
   # GET /results/1 or /results/1.json
@@ -15,10 +16,6 @@ class ResultsController < ApplicationController
   def new
     @survey = Survey.find(params[:survey_id])
     @result = Result.new(survey_id: params[:survey_id])
-  end
-
-  # GET /results/1/edit
-  def edit
   end
 
   # POST /results or /results.json
@@ -37,12 +34,12 @@ class ResultsController < ApplicationController
     else
       redirect_to(
         {
-          action: "new",
+          action: 'new',
           survey_id: @result.survey.id,
           grade: @result.grade,
           subject: @result.subject,
         },
-        alert: t("messages.check_grade_and_subject"),
+        alert: t('messages.check_grade_and_subject'),
       )
       return
     end
@@ -54,12 +51,12 @@ class ResultsController < ApplicationController
     rescue StandardError
       redirect_to(
         {
-          action: "new",
+          action: 'new',
           survey_id: @result.survey.id,
           grade: @result.grade,
           subject: @result.subject,
         },
-        alert: t("messages.data_convert_error"),
+        alert: t('messages.data_convert_error'),
       )
       return
     end
@@ -67,12 +64,12 @@ class ResultsController < ApplicationController
     unless @result.verified
       redirect_to(
         {
-          action: "new",
+          action: 'new',
           survey_id: @result.survey.id,
           grade: @result.grade,
-          subject: @result.subject,
+          subject: @result.subject
         },
-        alert: @result.messages.join("<br />"),
+        alert: @result.messages.join('<br />')
       )
       return
     end
@@ -82,32 +79,11 @@ class ResultsController < ApplicationController
     respond_to do |format|
       if @result.save
         format.html do
-          redirect_to @result.survey, notice: t("messages.result_created")
+          redirect_to @result.survey, notice: t('messages.result_created')
         end
         format.json { render :show, status: :created, location: @result }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json do
-          render json: @result.errors, status: :unprocessable_entity
-        end
-      end
-    end
-  end
-
-  # PATCH/PUT /results/1 or /results/1.json
-  def update
-    respond_to do |format|
-      if @result.update(result_params)
-        @result.file = params[:result][:file].read
-        @result.save
-
-        format.html do
-          redirect_to result_url(@result),
-                      notice: "Result was successfully updated."
-        end
-        format.json { render :show, status: :ok, location: @result }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
         format.json do
           render json: @result.errors, status: :unprocessable_entity
         end
@@ -121,7 +97,8 @@ class ResultsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to @result.survey, notice: t("messages.result_destroyed")
+        redirect_to admin_result_url(survey_id: @result.survey.id,
+          user_id: @result.user.id), notice: t('messages.result_destroyed')
       end
       format.json { head :no_content }
     end
@@ -136,6 +113,14 @@ class ResultsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_result
     @result = Result.find(params[:id])
+  end
+
+  def set_survey_and_user
+    @survey = Survey.find(params[:survey_id])
+    @user = User.find(params[:user_id])
+    if @survey.group_id != current_user.group_id or @user.group_id != current_user.group_id
+      redirect_to root_url
+    end
   end
 
   # Only allow a list of trusted parameters through.

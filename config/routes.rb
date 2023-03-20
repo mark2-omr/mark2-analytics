@@ -1,23 +1,38 @@
 Rails.application.routes.draw do
   resources :results do
-    member { get :download }
+    member do
+      get :download
+    end
   end
 
   resources :surveys do
-    collection { get :analyze }
-    member { get :download_definition }
+    collection do
+      get :analyze
+    end
+
+    member do
+      get :users
+      get :download_definition
+    end
   end
 
-  resources :groups
-  resources :users
+  namespace :admin do
+    resources :results do
+      member do
+        get :download
+      end
+    end
+    resources :groups
+    resources :users
+  end
 
-  get "/auth/:provider/callback", to: "sessions#create"
-  get "/auth/failure", to: "sessions#failure"
-  get "/sign_out", to: "sessions#destroy"
+  get '/auth/:provider/callback', to: 'sessions#create'
+  get '/auth/failure', to: 'sessions#failure'
+  get '/sign_out', to: 'sessions#destroy'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
   # root "articles#index"
-  root "welcome#index"
+  root 'welcome#index'
 end

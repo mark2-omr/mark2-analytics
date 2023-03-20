@@ -1,0 +1,55 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to root_path do %>
+          <i class="bi bi-house-door"></i>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item" aria-current="page">
+        <%= link_to surveys_path do %>
+          <%= t("activerecord.models.survey") %>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item">
+        <%= link_to @survey.name, @survey %>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <%= t("views.submission_status") %>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<% if @users.count > 0 %>
+  <div class="card">
+    <div class="card-header">
+      <%= t("activerecord.models.survey") %>
+    </div>
+    <div class="card-body">
+      <div id="users" class="list-group">
+        <% @users.each do |user| %>
+          <%= link_to admin_results_path(survey_id: @survey.id,
+            user_id: user.id),
+            class: "list-group-item d-flex justify-content-between align-items-start" do %>
+            <%= user.name %>
+            <% if user.result_count(@survey.id, true) > 0 %>
+              <span class="badge bg-success rounded-pill">
+                <%= user.result_count(@survey.id, true) %>
+              </span>
+            <% end %>
+            <% if user.result_count(@survey.id, false) > 0 %>
+              <span class="badge bg-danger rounded-pill">
+                <%= user.result_count(@survey.id, true) %>
+              </span>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="alert alert-danger show mt-3 mb-0" role="alert">
+    <%= t('views.no_data') %>
+  </div>
+<% end %>

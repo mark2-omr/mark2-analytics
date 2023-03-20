@@ -9,6 +9,7 @@ ja:
     enabled: "可能"
     disabled: "不可能"
     download_definition: "定義のダウンロード"
+    submission_status: "提出状況"
     no_data: "登録されているデータはありません。"
 
     data_analysis: "データ分析"

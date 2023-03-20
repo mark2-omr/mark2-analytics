@@ -38,6 +38,10 @@
       </tr>
     </table>
 
+    <%= link_to users_survey_path(@survey), class: "btn btn-primary" do %>
+      <i class="bi bi-files"></i> <%= t("views.submission_status") %>
+    <% end %>
+
     <%= link_to download_definition_survey_path(@survey),
       class: "btn btn-primary" do %>
       <i class="bi bi-download"></i> <%= t("views.download_definition") %>
