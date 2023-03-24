@@ -3,58 +3,45 @@
     <%= survey.name %>
   </div>
   <div class="card-body">
-    <table class="table table-bordered" style="table-layout: fixed;">
-      <tr>
-        <th><%= t("activerecord.attributes.survey.name") %></th>
-        <td><%= survey.name %></td>
-      </tr>
-      <tr>
-        <th><%= t("activerecord.attributes.survey.convert_url") %></th>
-        <td><%= survey.convert_url %></td>
-      </tr>
-      <tr>
-        <th><%= t("activerecord.attributes.survey.grades") %></th>
-        <td>
-          <%= survey.grades.map { |grade| t("views.grade_#{grade}") }.join(", ") %>
-        </td>
-      </tr>
-      <tr>
-        <th><%= t("activerecord.attributes.survey.subjects") %></th>
-        <td><%= survey.subjects %></td>
-      </tr>
-      <tr>
-        <th><%= t("activerecord.attributes.survey.question_attributes") %></th>
-        <td><%= survey.question_attributes %></td>
-      </tr>
-      <tr>
-        <th><%= t("activerecord.attributes.survey.student_attributes") %></th>
-        <td><%= survey.student_attributes %></td>
-      </tr>
-      <tr>
-        <th><%= t("activerecord.attributes.survey.submittable") %></th>
-        <td>
-          <%= survey.submittable ? t("views.enabled") : t("views.disabled") %>
-        </td>
-      </tr>
-    </table>
-
-    <%= link_to users_survey_path(@survey), class: "btn btn-primary" do %>
-      <i class="bi bi-files"></i> <%= t("views.submission_status") %>
-    <% end %>
-
-    <%= link_to download_definition_survey_path(@survey),
-      class: "btn btn-primary" do %>
-      <i class="bi bi-download"></i> <%= t("views.download_definition") %>
+    <% if @results.count > 0 %>
+      <% @results.each do |result| %>
+        <div class="card border-success mb-3">
+          <div class="card-header text-white bg-success">
+            <%= t("views.grade_#{result.grade}") %> <%= t("views.subject_#{result.subject}") %>
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <% result.messages.each do |message| %>
+                <li class="list-group-item">
+                  <%= message %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          <% if survey.submittable %>
+            <div class="card-footer">
+              <div class="d-flex justify-content-between flex-wrap flex-md-nowrap">
+                <%= link_to download_result_path(result), class: "btn btn-primary" do %>
+                  <i class="bi bi-download"></i> <%= t("views.download") %>
+                <% end %>
+                <%= button_to result, method: :delete, class: "btn btn-danger",
+                  data: { turbo_confirm: t("messages.confirm_deletion") } do %>
+                    <i class="bi bi-trash"></i> <%= t("views.delete") %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="alert alert-danger" role="alert">
+        <%= t("views.no_data") %>
+      </div>
     <% end %>
   </div>
-</div>
-
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap mt-3">
-  <%= link_to edit_survey_path(survey), class: "btn btn-warning" do %>
-    <i class="bi bi-pencil"></i> <%= t("views.edit") %>
-  <% end %>
-  <%= button_to survey, method: :delete, class: "btn btn-danger",
-    data: { turbo_confirm: t("messages.confirm_deletion") } do %>
-    <i class="bi bi-trash"></i> <%= t("views.delete") %>
-  <% end %>
+  <div class="card-footer">
+    <%= link_to new_result_path(survey_id: survey.id), class: "btn btn-primary" do %>
+      <i class="bi bi-plus-lg"></i> <%= t("views.new_result") %>
+    <% end %>
+  </div>
 </div>

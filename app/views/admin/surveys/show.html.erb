@@ -7,7 +7,7 @@
         <% end %>
       </li>
       <li class="breadcrumb-item">
-        <%= link_to surveys_path do %>
+        <%= link_to admin_surveys_path do %>
           <%= t("activerecord.models.survey") %>
         <% end %>
       </li>
@@ -18,4 +18,4 @@
   </nav>
 </div>
 
-<%= render @survey, results: @results %>
+<%= render @survey %>

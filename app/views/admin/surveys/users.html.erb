@@ -7,12 +7,12 @@
         <% end %>
       </li>
       <li class="breadcrumb-item" aria-current="page">
-        <%= link_to surveys_path do %>
+        <%= link_to admin_surveys_path do %>
           <%= t("activerecord.models.survey") %>
         <% end %>
       </li>
       <li class="breadcrumb-item">
-        <%= link_to @survey.name, @survey %>
+        <%= link_to @survey.name, admin_survey_path(@survey) %>
       </li>
       <li class="breadcrumb-item active" aria-current="page">
         <%= t("views.submission_status") %>
