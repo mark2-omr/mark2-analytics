@@ -14,33 +14,28 @@ class Admin::ResultsController < ApplicationController
 
   # GET /results/new
   def new
-    @survey = Survey.find(params[:survey_id])
-    @result = Result.new(survey_id: params[:survey_id])
+    @result = Result.new(user_id: params[:user_id],
+                         survey_id: params[:survey_id])
   end
 
   # POST /results or /results.json
   def create
     @result = Result.new(result_params)
-    @result.user_id = current_user.id
 
     # Check grade and subject combination
     if @result.survey.questions.key?("#{@result.grade}-#{@result.subject}")
       Result.where(
-        user_id: current_user.id,
+        user_id: @result.user.id,
         survey_id: @result.survey_id,
         grade: @result.grade,
         subject: @result.subject,
       ).destroy_all
     else
-      redirect_to(
-        {
-          action: 'new',
-          survey_id: @result.survey.id,
-          grade: @result.grade,
-          subject: @result.subject,
-        },
-        alert: t('messages.check_grade_and_subject'),
-      )
+      redirect_to(new_admin_result_url(user_id: @result.user.id,
+                                       survey_id: @result.survey.id,
+                                       grade: @result.grade,
+                                       subject: @result.subject),
+                  alert: t('messages.check_grade_and_subject'))
       return
     end
 
@@ -49,28 +44,20 @@ class Admin::ResultsController < ApplicationController
       @result.load(workbook)
       @result.file = params[:result][:file].read
     rescue StandardError
-      redirect_to(
-        {
-          action: 'new',
-          survey_id: @result.survey.id,
-          grade: @result.grade,
-          subject: @result.subject,
-        },
-        alert: t('messages.data_convert_error'),
-      )
+      redirect_to(new_admin_result_url(user_id: @result.user.id,
+                                       survey_id: @result.survey.id,
+                                       grade: @result.grade,
+                                       subject: @result.subject),
+                  alert: t('messages.data_convert_error'))
       return
     end
 
     unless @result.verified
-      redirect_to(
-        {
-          action: 'new',
-          survey_id: @result.survey.id,
-          grade: @result.grade,
-          subject: @result.subject
-        },
-        alert: @result.messages.join('<br />')
-      )
+      redirect_to(new_admin_result_url(user_id: @result.user.id,
+                                       survey_id: @result.survey.id,
+                                       grade: @result.grade,
+                                       subject: @result.subject),
+                  alert: @result.messages.join('<br />'))
       return
     end
 

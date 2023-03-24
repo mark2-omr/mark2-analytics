@@ -5,14 +5,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :surveys do
+  resources :surveys, only: %i[index show] do
     collection do
       get :analyze
-    end
-
-    member do
-      get :users
-      get :download_definition
     end
   end
 
@@ -22,6 +17,14 @@ Rails.application.routes.draw do
         get :download
       end
     end
+
+    resources :surveys do
+      member do
+        get :users
+        get :download_definition
+      end
+    end
+
     resources :groups
     resources :users
   end

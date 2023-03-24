@@ -7,21 +7,21 @@
         <% end %>
       </li>
       <li class="breadcrumb-item active" aria-current="page">
-        <%= t("activerecord.models.group") %>
+        <%= t("activerecord.models.survey") %>
       </li>
     </ol>
   </nav>
 </div>
 
-<% if @groups.count > 0 %>
+<% if @surveys.count > 0 %>
   <div class="card">
     <div class="card-header">
-      <%= t("activerecord.models.group") %>
+      <%= t("activerecord.models.survey") %>
     </div>
     <div class="card-body">
-      <div id="groups" class="list-group">
-        <% @groups.each do |group| %>
-          <%= link_to group.name, admin_group_path(group),
+      <div id="surveys" class="list-group">
+        <% @surveys.each do |survey| %>
+          <%= link_to survey.name, admin_survey_path(survey),
             class: "list-group-item list-group-item-action" %>
         <% end %>
       </div>
@@ -34,7 +34,7 @@
 <% end %>
 
 <div class="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-  <%= link_to new_admin_group_path, class: "btn btn-primary" do %>
-    <i class="bi bi-plus-lg"></i> <%= t("views.new_group") %>
+  <%= link_to new_admin_survey_path, class: "btn btn-primary" do %>
+    <i class="bi bi-plus-lg"></i> <%= t("views.new_survey") %>
   <% end %>
 </div>

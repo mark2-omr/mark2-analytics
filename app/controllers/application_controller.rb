@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     return unless session[:user_id]
+
     @current_user ||= User.find_by(uid: session[:user_id])
   end
 
@@ -18,5 +19,9 @@ class ApplicationController < ActionController::Base
 
   def admin_required
     redirect_to root_path unless current_user.admin
+  end
+
+  def manager_required
+    redirect_to root_path unless current_user.manager
   end
 end

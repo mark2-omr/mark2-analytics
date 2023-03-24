@@ -1,4 +1,4 @@
-<%= form_with(model: result) do |form| %>
+<%= form_with(model: [:admin, result]) do |form| %>
   <% if result.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(result.errors.count, "error") %> prohibited this result from being saved:</h2>
@@ -11,7 +11,8 @@
     </div>
   <% end %>
 
-  <%= form.hidden_field :survey_id, value: @survey.id %>
+  <%= form.hidden_field :user_id, value: @result.user.id %>
+  <%= form.hidden_field :survey_id, value: @result.survey.id %>
 
   <div class="mb-3">
     <%= form.label :grade, class: "form-label" %>

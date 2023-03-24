@@ -39,9 +39,16 @@
               <% end %>
             </li>
             <li>
-              <%= link_to surveys_path, class: "dropdown-item" do %>
-                <i class="bi bi-clipboard"></i>
-                <%= t("activerecord.models.survey") %>
+              <% if current_user.manager %>
+                <%= link_to admin_surveys_path, class: "dropdown-item" do %>
+                  <i class="bi bi-clipboard"></i>
+                  <%= t("activerecord.models.survey") %>
+                <% end %>
+              <% else %>
+                <%= link_to surveys_path, class: "dropdown-item" do %>
+                  <i class="bi bi-clipboard"></i>
+                  <%= t("activerecord.models.survey") %>
+                <% end %>
               <% end %>
             </li>
             <li><hr class="dropdown-divider"></li>
@@ -74,32 +81,26 @@
           <div class="position-sticky pt-3 sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <% if params[:controller] == "welcome" %>
-                  <%= link_to root_path, class: "nav-link active" do %>
-                    <i class="bi bi-house-door-fill"></i> Home
-                  <% end %>
-                <% else %>
-                  <%= link_to root_path, class: "nav-link" do %>
-                    <i class="bi bi-house-door"></i> Home
-                  <% end %>
+                <%= link_to root_path, class: (params[:controller] == "welcome") ? "nav-link active" : "nav-link" do %>
+                  <i class="bi bi-house-door"></i> Home
                 <% end %>
               </li>
               <% if user_signed_in? %>
                 <li class="nav-item">
-                  <% if params[:controller] == "surveys" and params[:action] != "analyze" %>
-                    <%= link_to surveys_path, class: "nav-link active" do %>
-                      <i class="bi bi-clipboard-fill"></i>
+                  <% if current_user.manager %>
+                    <%= link_to admin_surveys_path, class: (params[:controller] == "admin/surveys") ? "nav-link active" : "nav-link" do %>
+                      <i class="bi bi-clipboard"></i>
                       <%= t("activerecord.models.survey") %>
                     <% end %>
                   <% else %>
-                    <%= link_to surveys_path, class: "nav-link" do %>
+                    <%= link_to surveys_path, class: (params[:controller] == "surveys" and params[:action] != "analyze") ? "nav-link active" : "nav-link" do %>
                       <i class="bi bi-clipboard"></i>
                       <%= t("activerecord.models.survey") %>
                     <% end %>
                   <% end %>
                 </li>
 
-                <% unless current_user.admin %>
+                <% unless current_user.manager %>
                   <li class="nav-item">
                     <%= link_to analyze_surveys_path,
                       class: (params[:controller] == "surveys" and
@@ -113,16 +114,9 @@
 
                 <% if current_user.admin %>
                   <li class="nav-item">
-                    <% if params[:controller] == "groups" %>
-                      <%= link_to admin_groups_path, class: "nav-link active" do %>
-                        <i class="bi bi-box-fill"></i>
-                        <%= t("activerecord.models.group") %>
-                      <% end %>
-                    <% else %>
-                      <%= link_to admin_groups_path, class: "nav-link" do %>
-                        <i class="bi bi-box"></i>
-                        <%= t("activerecord.models.group") %>
-                      <% end %>
+                    <%= link_to admin_groups_path, class: (params[:controller] == "admin/groups") ? "nav-link active" : "nav-link" do %>
+                      <i class="bi bi-box"></i>
+                      <%= t("activerecord.models.group") %>
                     <% end %>
                   </li>
                 <% end %>
