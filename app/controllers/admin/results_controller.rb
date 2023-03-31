@@ -1,5 +1,6 @@
 class Admin::ResultsController < ApplicationController
   before_action :authenticate_user!
+  before_action :manager_required
   before_action :set_result, only: %i[show edit update destroy download]
   before_action :set_survey_and_user, only: %i[ index new ]
 
@@ -14,8 +15,7 @@ class Admin::ResultsController < ApplicationController
 
   # GET /results/new
   def new
-    @result = Result.new(user_id: params[:user_id],
-                         survey_id: params[:survey_id])
+    @result = Result.new(user_id: params[:user_id], survey_id: params[:survey_id])
   end
 
   # POST /results or /results.json
@@ -100,6 +100,9 @@ class Admin::ResultsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_result
     @result = Result.find(params[:id])
+    if @result.survey.group_id != current_user.group_id
+      redirect_to root_url
+    end
   end
 
   def set_survey_and_user
