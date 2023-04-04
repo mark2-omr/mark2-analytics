@@ -5,12 +5,36 @@
   <div class="card-body">
     <table class="table table-bordered" style="table-layout: fixed;">
       <tr>
-        <th><%= t("activerecord.attributes.user.email") %></th>
+        <th><%= t('activerecord.attributes.user.uid') %></th>
+        <td><%= user.uid %></td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.user.email') %></th>
         <td><%= user.email %></td>
       </tr>
       <tr>
-        <th><%= t("activerecord.attributes.user.name") %></th>
+        <th><%= t('activerecord.attributes.user.name') %></th>
         <td><%= user.name %></td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.user.admin') %></th>
+        <td>
+          <% if user.admin %>
+            <%= t('views.enabled') %>
+          <% else %>
+            <%= t('views.disabled') %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.user.manager') %></th>
+        <td>
+          <% if user.manager %>
+            <%= t('views.enabled') %>
+          <% else %>
+            <%= t('views.disabled') %>
+          <% end %>
+        </td>
       </tr>
     </table>
   </div>

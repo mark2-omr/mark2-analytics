@@ -6,12 +6,12 @@ ja:
     edit: "編集"
     delete: "削除"
     download: "ダウンロード"
-    enabled: "可能"
-    disabled: "不可能"
-    download_definition: "定義のダウンロード"
-    submission_status: "提出状況"
+    enabled: "有効"
+    disabled: "無効"
     no_data: "登録されているデータはありません。"
 
+    download_definition: "定義のダウンロード"
+    submission_status: "提出状況"
     data_analysis: "データ分析"
 
     new_group: "グループの作成"

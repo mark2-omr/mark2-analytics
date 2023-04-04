@@ -17,7 +17,7 @@
         <% end %>
       </li>
       <li class="breadcrumb-item active" aria-current="page">
-        <%= t("activerecord.models.user") %>
+        <%= t('activerecord.models.user') %>
       </li>
     </ol>
   </nav>
@@ -26,14 +26,33 @@
 <% if @users.count > 0 %>
   <div class="card">
     <div class="card-header">
-      <%= t("activerecord.models.user") %>
+      <%= t('activerecord.models.user') %>
     </div>
     <div class="card-body">
       <div id="users" class="list-group">
         <% @users.each do |user| %>
-          <%= link_to user.name, admin_user_path(user),
-            class: "list-group-item list-group-item-action" %>
+          <%= link_to admin_user_path(user),
+                      class: 'list-group-item list-group-item-action d-flex justify-content-between' do %>
+            <%= user.name %>
+            <% if user.admin or user.manager %>
+              <div>
+                <% if user.admin %>
+                  <span class="badge bg-danger">
+                    <%= t('activerecord.attributes.user.admin') %>
+                  </span>
+                <% end %>
+                <% if user.manager %>
+                  <span class="badge bg-warning text-dark">
+                    <%= t('activerecord.attributes.user.manager') %>
+                  </span>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
         <% end %>
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <%= paginate @users %>
       </div>
     </div>
   </div>
@@ -45,8 +64,8 @@
 
 <div class="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
   <div class="btn-toolbar mb-2 mb-md-0">
-    <%= link_to new_admin_user_path(group_id: @group.id), class: "btn btn-primary" do %>
-      <i class="bi bi-plus-lg"></i> <%= t("views.new_user") %>
+    <%= link_to new_admin_user_path(group_id: @group.id), class: 'btn btn-primary' do %>
+      <i class="bi bi-plus-lg"></i> <%= t('views.new_user') %>
     <% end %>
   </div>
 </div>

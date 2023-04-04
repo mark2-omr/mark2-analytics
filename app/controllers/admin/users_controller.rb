@@ -6,7 +6,9 @@ class Admin::UsersController < ApplicationController
   # GET /users or /users.json
   def index
     @group = Group.find(params[:group_id])
+
     @users = User.where(group_id: params[:group_id])
+    @users = @users.order('id ASC').page params[:page]
   end
 
   # GET /users/1 or /users/1.json
@@ -76,6 +78,6 @@ class Admin::UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:group_id, :email, :name)
+    params.require(:user).permit(:group_id, :email, :name, :admin, :manager)
   end
 end
