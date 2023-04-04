@@ -14,17 +14,29 @@
   <%= form.hidden_field :group_id, value: user.group_id %>
 
   <div class="mb-3">
-    <%= form.label :email, class: "form-label" %>
-    <%= form.email_field :email, class: "form-control", required: true,
-      disabled: params[:action] != "new" %>
+    <%= form.label :email, class: 'form-label' %>
+    <%= form.email_field :email, class: 'form-control', required: true,
+      disabled: params[:action] != 'new' %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :name, class: "form-label" %>
-    <%= form.text_field :name, class: "form-control", required: true %>
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control', required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :admin, class: 'form-label' %>
+    <%= form.select :admin, [[t('views.enabled'), true],
+      [t('views.disabled'), false]], {}, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :manager, class: 'form-label' %>
+    <%= form.select :manager, [[t('views.enabled'), true],
+      [t('views.disabled'), false]], {}, class: 'form-control' %>
   </div>
 
   <div class="tb-3">
-    <%= form.submit class: "btn btn-primary col-4 offset-4" %>
+    <%= form.submit class: 'btn btn-primary col-4 offset-4' %>
   </div>
 <% end %>

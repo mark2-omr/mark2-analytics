@@ -7,10 +7,11 @@ ja:
       result: "結果"
     attributes:
       user:
+        uid: "UID"
         email: "Eメール"
         name: "名前"
-        admin: "システム管理権限"
-        manager: "マネージャー権限"
+        admin: "システム管理"
+        manager: "マネージャー"
       group:
         name: "名前"
       survey:
