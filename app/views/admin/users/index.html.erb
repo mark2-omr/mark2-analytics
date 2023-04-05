@@ -23,6 +23,14 @@
   </nav>
 </div>
 
+<%= form_tag('/admin/users', method: 'get') do %>
+  <%= hidden_field_tag :group_id, @group.id %>
+  <div class="input-group mb-3">
+    <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: t('views.search') %>
+    <%= button_tag t('views.search'), disable_with: true, class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
 <% if @users.count > 0 %>
   <div class="card">
     <div class="card-header">

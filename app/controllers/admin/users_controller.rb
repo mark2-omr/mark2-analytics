@@ -7,7 +7,15 @@ class Admin::UsersController < ApplicationController
   def index
     @group = Group.find(params[:group_id])
 
-    @users = User.where(group_id: params[:group_id])
+    if params[:q]
+      query = User.where(group_id: params[:group_id])
+      params[:q].split(/[[:blank:]]+/).each do |q|
+        query = query.where('search_text like ?', "%#{q}%")
+      end
+      @users = query
+    else
+      @users = User.where(group_id: params[:group_id])
+    end
     @users = @users.order('id ASC').page params[:page]
   end
 
