@@ -2,6 +2,7 @@ class User < ApplicationRecord
   belongs_to :group
   before_create :create_auth0_user
   before_destroy :destroy_auth0_user
+  before_save :update_search_text
 
   def self.find_or_create_from_auth(auth)
     provider = auth[:provider]
@@ -73,5 +74,9 @@ class User < ApplicationRecord
     request["Authorization"] = "bearer #{auth0_token}"
     request["content-type"] = "application/json"
     response = http.request(request)
+  end
+
+  def update_search_text
+    self.search_text = "#{self.uid} #{self.email} #{self.name}"
   end
 end

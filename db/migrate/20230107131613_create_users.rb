@@ -8,6 +8,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :name
       t.boolean :admin, default: false
       t.boolean :manager, default: false
+      t.text :search_text
 
       t.timestamps
     end
