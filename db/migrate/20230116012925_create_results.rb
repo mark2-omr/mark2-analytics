@@ -13,5 +13,7 @@ class CreateResults < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    add_index :results, %i[survey_id user_id]
   end
 end
