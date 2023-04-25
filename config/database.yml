@@ -94,3 +94,4 @@ production:
   port: <%= Rails.application.credentials.cockroachdb.port %>
   sslmode: verify-full
   sslrootcert: <%= Rails.root.join('config', 'certs', 'cockroachdb-mark2-analytics.crt') %>
+  options: --cluster=<%= Rails.application.credentials.cockroachdb.cluster %>
