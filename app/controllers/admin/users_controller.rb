@@ -53,6 +53,10 @@ class Admin::UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
+        if @user.previous_changes.key?(:email)
+          @user.update_auth0_user
+        end
+
         format.html do
           redirect_to admin_user_url(@user), notice: t('messages.user_updated')
         end
@@ -70,8 +74,7 @@ class Admin::UsersController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to admin_users_url(group_id: @user.group_id),
-                    notice: t('messages.user_destroyed')
+        redirect_to admin_users_url(group_id: @user.group_id), notice: t('messages.user_destroyed')
       end
       format.json { head :no_content }
     end
