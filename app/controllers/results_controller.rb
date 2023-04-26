@@ -77,8 +77,6 @@ class ResultsController < ApplicationController
       return
     end
 
-    @result.file = params[:result][:file].read
-
     respond_to do |format|
       if @result.save
         format.html do
@@ -128,7 +126,7 @@ class ResultsController < ApplicationController
   end
 
   def download
-    send_data(@result.file, filename: "#{@result.id}.xlsx")
+    send_data(@result.file, filename: "Mark2_File_#{@result.survey_id}_#{@result.grade}_#{@result.subject}.xlsx")
   end
 
   private

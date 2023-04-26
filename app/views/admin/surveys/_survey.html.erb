@@ -66,7 +66,7 @@
   <%= link_to edit_admin_survey_path(survey), class: "btn btn-warning" do %>
     <i class="bi bi-pencil"></i> <%= t('views.edit') %>
   <% end %>
-  <%= button_to survey, method: :delete, class: "btn btn-danger",
+  <%= button_to admin_survey_path(@survey), method: :delete, class: "btn btn-danger",
     data: { turbo_confirm: t('messages.confirm_deletion') } do %>
     <i class="bi bi-trash"></i> <%= t('views.delete') %>
   <% end %>

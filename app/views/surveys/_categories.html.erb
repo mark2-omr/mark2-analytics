@@ -6,13 +6,13 @@
     <div class="card-body">
       <table class="table table-striped table-bordered">
         <tr>
-          <th class="col-sm-6 text-center">
+          <th class="col-6 text-center">
             <%= category[:title] %>
           </th>
-          <th class="col-sm-3 text-center">
+          <th class="col-3 text-center">
             <%= t("views.analysis.correct_rates") %>
           </th>
-          <th class="col-sm-3 text-center">
+          <th class="col-3 text-center">
             <%= t("views.analysis.correct_rates") %>
             (<%= t("views.comparator") %>)
           </th>
@@ -24,8 +24,9 @@
               <%= format("%.2f", value.round(2)) %> %
             </td>
             <td align="right">
-              <%= format("%.2f", 
-                @survey.aggregated["categories"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["values"][key].round(2)) %> %
+              <% if @survey.aggregated %>
+                <%= format("%.2f", @survey.aggregated["categories"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["values"][key].round(2)) %> %
+              <% end %>
             </td>
           </tr>
         <% end %>
