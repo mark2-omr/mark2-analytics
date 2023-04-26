@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   belongs_to :group
+  has_many :results, dependent: :destroy
   before_create :create_auth0_user
   before_destroy :destroy_auth0_user
   before_save :update_search_text
