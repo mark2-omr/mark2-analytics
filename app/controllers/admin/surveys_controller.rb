@@ -1,8 +1,7 @@
 class Admin::SurveysController < ApplicationController
   before_action :authenticate_user!
   before_action :manager_required
-  before_action :set_survey,
-                only: %i[show edit update destroy users download_definition]
+  before_action :set_survey, only: %i[show edit update destroy users download_definition download_merged_results aggregate_and_merge_results]
 
   # GET /surveys or /surveys.json
   def index
@@ -92,7 +91,18 @@ class Admin::SurveysController < ApplicationController
   end
 
   def download_definition
-    send_data(@survey.definition, filename: "#{@survey.id}.xlsx")
+    send_data(@survey.definition, filename: "Mark2_Definition_#{@survey.id}.xlsx")
+  end
+
+  def download_merged_results
+    send_data(@survey.merged, filename: "Mark2_Results_#{@survey.id}.xlsx")
+  end
+
+  def aggregate_and_merge_results
+    @survey.aggregate_results
+    @survey.merge_results
+
+    redirect_to admin_survey_url(@survey), notice: t('messages.survey_results_aggregated')
   end
 
   private

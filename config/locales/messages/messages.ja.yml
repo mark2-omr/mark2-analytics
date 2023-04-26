@@ -1,6 +1,7 @@
 ja:
   messages:
     confirm_deletion: "削除してもよいですか？"
+    confirm_aggregation: "結果を集計してもよいですか？"
 
     user_created: "ユーザーが登録されました。"
     user_updated: "ユーザーが更新されました。"
@@ -13,6 +14,7 @@ ja:
     survey_created: "学力調査が登録されました。"
     survey_updated: "学力調査が更新されました。"
     survey_destroyed: "学力調査が削除されました。"
+    survey_results_aggregated: "学力調査の結果が集計されました。"
 
     result_created: "結果が登録されました。"
     result_destroyed: "結果が削除されました。"

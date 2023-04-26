@@ -51,13 +51,26 @@
       </tr>
     </table>
 
-    <%= link_to users_admin_survey_path(@survey), class: "btn btn-primary" do %>
+    <%= link_to users_admin_survey_path(@survey), class: "btn btn-primary mb-2" do %>
       <i class="bi bi-files"></i> <%= t('views.submission_status') %>
     <% end %>
 
+    <%= link_to download_merged_results_admin_survey_path(@survey),
+          class: "btn btn-primary mb-2" do %>
+      <i class="bi bi-download"></i> <%= t('views.download_merged_results') %>
+    <% end %>
+
     <%= link_to download_definition_admin_survey_path(@survey),
-      class: "btn btn-primary" do %>
+          class: "btn btn-primary mb-2", disabled: !@survey.merged do %>
       <i class="bi bi-download"></i> <%= t('views.download_definition') %>
+    <% end %>
+
+    <hr />
+
+    <%= button_to aggregate_and_merge_results_admin_survey_path(@survey),
+          class: "btn btn-primary", method: :patch,
+          data: { turbo_confirm: t('messages.confirm_aggregation') } do %>
+      <i class="bi bi-calculator"></i> <%= t('views.aggregate_results') %>
     <% end %>
   </div>
 </div>
@@ -67,7 +80,7 @@
     <i class="bi bi-pencil"></i> <%= t('views.edit') %>
   <% end %>
   <%= button_to admin_survey_path(@survey), method: :delete, class: "btn btn-danger",
-    data: { turbo_confirm: t('messages.confirm_deletion') } do %>
+        data: { turbo_confirm: t('messages.confirm_deletion') } do %>
     <i class="bi bi-trash"></i> <%= t('views.delete') %>
   <% end %>
 </div>

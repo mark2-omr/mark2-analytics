@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       member do
         get :users
         get :download_definition
+        get :download_merged_results
+        patch :aggregate_and_merge_results
       end
     end
 
