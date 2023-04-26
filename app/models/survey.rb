@@ -268,4 +268,111 @@ class Survey < ApplicationRecord
 
     return outputs
   end
+
+  def aggregate_results
+    patterns, correct_rates, categories, histograms =
+      Hash.new,
+      Hash.new,
+      Hash.new,
+      Hash.new
+
+    self.questions.each do |key, questions|
+      grade, subject = key.split("-")
+
+      # Aggregation for Total
+      selected_results = Array.new
+      Result
+        .where(survey_id: self.id, grade: grade, subject: subject)
+        .each { |result| selected_results += result.converted }
+      result =
+        Result.new(
+          survey_id: self.id,
+          grade: grade,
+          subject: subject,
+          converted: selected_results,
+        )
+      patterns["#{grade}-#{subject}-all"] = result.patterns
+      correct_rates["#{grade}-#{subject}-all"] = result.correct_rates
+      categories["#{grade}-#{subject}-all"] = result.categories
+      histograms["#{grade}-#{subject}-all"] = result.histogram
+
+      # Aggregation for Student Attibutes
+      self.student_attributes.each_with_index do |(student_attribute_label, student_attribute_values), i|
+        next if student_attribute_label == I18n.t("views.class")
+
+        student_attribute_values.each do |key, value|
+          student_attributes = Array.new(self.student_attributes.size, 0)
+          student_attributes[i] = key
+
+          patterns["#{grade}-#{subject}-#{student_attribute_label}-#{key}"] = result.patterns(student_attributes)
+          correct_rates["#{grade}-#{subject}-#{student_attribute_label}-#{key}"] = result.correct_rates(student_attributes)
+          categories["#{grade}-#{subject}-#{student_attribute_label}-#{key}"] = result.categories(student_attributes)
+          histograms["#{grade}-#{subject}-#{student_attribute_label}-#{key}"] = result.histogram(student_attributes)
+        end
+      end
+    end
+
+    self.aggregated = {
+      patterns: patterns,
+      correct_rates: correct_rates,
+      categories: categories,
+      histograms: histograms,
+    }
+    self.save
+  end
+
+  def merge_results
+    require 'rubyXL/convenience_methods'
+
+    workbook = RubyXL::Workbook.new
+    is_first_sheet = true
+
+    self.grades.each do |grade|
+      self.subjects.each do |subject|
+        results = Result.where(survey_id: self.id, grade: grade, subject: subject).order('user_id ASC')
+        if results.size == 0
+          next
+        end
+
+        if is_first_sheet
+          sheet = workbook[0]
+          sheet.sheet_name = "#{grade}-#{subject}"
+          is_first_sheet = false
+        else
+          sheet = workbook.add_worksheet("#{grade}-#{subject}")
+        end
+        sheet.add_cell(0, 0, '学校ID')
+        sheet.add_cell(0, 1, '学校種別')
+        sheet.add_cell(0, 2, '学科')
+        sheet.add_cell(0, 3, 'クラス')
+        sheet.add_cell(0, 4, '出席番号')
+
+        i = 1
+        results.each do |result|
+          converted = result.converted
+          converted.each do |student|
+            values = Array.new
+            user = User.find(result.user_id)
+            values.push(user.name)
+            student['student_attributes'].each do |key, value|
+              values.push(value)
+            end
+            values.push(student['number'])
+            values += student['values'].flatten
+            # print values.join(',') + "\n"
+            values.each_with_index do |value, j|
+              if i == 1 and j >= 5
+                sheet.add_cell(0, j, j - 4)
+              end
+              sheet.add_cell(i, j, value)
+            end
+            i += 1
+          end
+        end
+      end
+    end
+
+    self.merged = workbook.stream.read
+    self.save
+  end
 end
