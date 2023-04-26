@@ -12,11 +12,13 @@
           download: {background: "#ffffff"} %>
       </div>
       <div class="col-12">
-        <%= column_chart Survey.histogram_chart(@survey.aggregated["histograms"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"]),
-          title: t("views.comparator"),
-          xtitle: t("views.analysis.number_of_corrects"),
-          ytitle: t("views.analysis.number_of_people"),
-          download: {background: "#ffffff"} %>
+        <% if @survey.aggregated %>
+          <%= column_chart Survey.histogram_chart(@survey.aggregated["histograms"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"]),
+            title: t("views.comparator"),
+            xtitle: t("views.analysis.number_of_corrects"),
+            ytitle: t("views.analysis.number_of_people"),
+            download: {background: "#ffffff"} %>
+        <% end %>
     </div>
   </div>
 </div>

@@ -19,7 +19,7 @@ ja:
 
     survey_file_is_not_updatable: "現在、結果ファイルの更新は許可されていません。"
     check_grade_and_subject: "学年と科目の組み合わせを確認してください。"
-    analysis_data_not_found: "指定した分析データは登録されていません。"
+    analysis_data_not_found: "指定したデータは登録されていません。"
     data_convert_error: "データ処理に失敗しました。ファイルの内容を確認してください。"
     n_data_were_registered: "件のデータが登録されました。"
     duplicate_student_information: "生徒情報の重複があります "

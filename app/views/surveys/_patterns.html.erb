@@ -11,9 +11,11 @@
             download: {background: "#ffffff"} %>
         </div>
         <div class="col-6">
-          <%= pie_chart @survey.aggregated["patterns"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["options"],
-            title: t("views.comparator"),
-            download: {background: "#ffffff"} %>
+          <% if @survey.aggregated %>
+            <%= pie_chart @survey.aggregated["patterns"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["options"],
+              title: t("views.comparator"),
+              download: {background: "#ffffff"} %>
+          <% end %>
         </div>
       </div>
     </div>
