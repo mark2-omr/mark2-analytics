@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate_user!
-    redirect_to root_path unless session[:user_id]
+    redirect_to root_url unless session[:user_id]
   end
 
   def current_user
@@ -18,10 +18,10 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_required
-    redirect_to root_path unless current_user.admin
+    redirect_to root_url unless current_user.admin
   end
 
   def manager_required
-    redirect_to root_path unless current_user.manager
+    redirect_to root_url unless current_user.manager
   end
 end
