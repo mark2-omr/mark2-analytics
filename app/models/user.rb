@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :results, dependent: :destroy
   before_create :create_auth0_user
   before_destroy :destroy_auth0_user
+  before_save :force_manager_permissions
   before_save :update_search_text
 
   def self.find_or_create_from_auth(auth)
@@ -87,6 +88,12 @@ class User < ApplicationRecord
     response = http.request(request)
 
     return JSON.parse(response.body)["access_token"]
+  end
+
+  def force_manager_permissions
+    if self.admin
+      self.manager = true
+    end
   end
 
   def update_search_text
