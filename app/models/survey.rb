@@ -172,8 +172,7 @@ class Survey < ApplicationRecord
     end
 
     results.each do |student|
-      key =
-        "#{student["student_attributes"].values.join("-")}-#{student["number"]}"
+      key = "#{grade}-#{student["student_attributes"].values.join("-")}-#{student["number"]}"
       if question_number == 0
         # Correct rate group
         correct_count = 0
