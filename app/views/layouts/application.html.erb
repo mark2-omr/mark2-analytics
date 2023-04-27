@@ -24,7 +24,7 @@
         <div class="dropdown">
           <a data-bs-toggle="dropdown" aria-expanded="false">
             <%= image_tag 'user.png', class: 'rounded-circle',
-              style: 'width: 36px; height: 36px; margin-right: 12px;' %>
+                  style: 'width: 36px; height: 36px; margin-right: 12px;' %>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" style="margin: 0 8px;">
             <li>
@@ -70,9 +70,15 @@
             <% end %>
             <li><hr class="dropdown-divider"></li>
             <li>
-              <%= link_to sign_out_path,
-                data: { turbo: false },
-                class: "dropdown-item" do %>
+              <%= link_to 'https://mark2.sfc.keio.ac.jp/docs/mark2_analytics.pdf',
+                    class: 'dropdown-item', target: '_blank' do %>
+                <i class="bi bi-filetype-pdf"></i> <%= t('views.user_manual') %>
+              <% end %>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <%= link_to sign_out_path, data: { turbo: false },
+                    class: 'dropdown-item' do %>
                 <i class="bi bi-arrow-bar-right"></i>
                 <%= t("views.sign_out") %>
               <% end %>
@@ -82,7 +88,7 @@
       <% else %>
         <div class="navbar-nav">
           <div class="nav-item text-nowrap">
-            <%= form_tag("/auth/auth0", name: "navbar_sign_in", method: :post,
+            <%= form_tag('/auth/auth0', name: 'navbar_sign_in', method: :post,
                   data: { turbo: false }) do %>
               <a href="#" onclick="document.navbar_sign_in.submit();" class="nav-link px-3">
                 <%= t("views.sign_in") %>
@@ -135,6 +141,12 @@
                     <% end %>
                   </li>
                 <% end %>
+              <% end %>
+
+              <hr />
+              <%= link_to 'https://mark2.sfc.keio.ac.jp/docs/mark2_analytics.pdf',
+                    class: 'nav-link', target: '_blank' do %>
+                <i class="bi bi-filetype-pdf"></i> <%= t('views.user_manual') %>
               <% end %>
             </ul>
           </div>

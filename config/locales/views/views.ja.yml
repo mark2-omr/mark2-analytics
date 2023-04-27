@@ -3,7 +3,8 @@ ja:
     sign_in: "ログイン"
     sign_out: "ログアウト"
     home: "ホーム"
-    documents: "マニュアル"
+    documents: "ドキュメント"
+    user_manual: "利用マニュアル"
 
     welcome_message: "Mark2 Analyticsはマークシートシステム Mark2と連携して動作する学力調査データ分析システムです。慶應義塾大学SFC研究所社会イノベーション・ラボ（玉村雅敏研究室）にて開発プロジェクトをスタートして、オープンソースとして開発をしています。"
     sign_in_message: "Mark2 Analyticsを利用するためにはログインしてください。"
