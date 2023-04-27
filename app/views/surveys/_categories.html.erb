@@ -21,11 +21,17 @@
           <tr>
             <td><%= key %></td>
             <td align="right">
-              <%= format("%.2f", value.round(2)) %> %
+              <% if value and !value.nan? %>
+                <%= format("%.2f", value.round(2)) %> %
+              <% else %>
+                - %
+              <% end %>
             </td>
             <td align="right">
-              <% if @survey.aggregated %>
+              <% if @survey.aggregated and @survey.aggregated["categories"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["values"][key] %>
                 <%= format("%.2f", @survey.aggregated["categories"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["values"][key].round(2)) %> %
+              <% else %>
+                - %
               <% end %>
             </td>
           </tr>

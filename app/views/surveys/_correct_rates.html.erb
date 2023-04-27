@@ -22,11 +22,17 @@
             <%= correct_ratio[:question] %>
           </td>
           <td align="right">
-            <%= format("%.2f", correct_ratio[:value].round(2)) %> %
+            <% if correct_ratio[:value] and !correct_ratio[:value].nan? %>
+              <%= format("%.2f", correct_ratio[:value].round(2)) %> %
+            <% else %>
+              - %
+            <% end %>
           </td>
           <td align="right">
             <% if @survey.aggregated and @survey.aggregated["correct_rates"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["value"] %>
               <%= format("%.2f", @survey.aggregated["correct_rates"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["value"].round(2)) %> %
+            <% else %>
+              - %
             <% end %>
           </td>
         </tr>
