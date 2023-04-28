@@ -36,7 +36,7 @@
           <% survey.student_attributes.each do |category, attributes| %>
             <p>
               <%= category %>:
-              <% attributes.each do |key, value| %>
+              <% attributes.sort {|(k1, v1), (k2, v2)| k1.to_i <=> k2.to_i }.to_h.each do |key, value| %>
                 (<%= key %>) <%= value %>
               <% end %>
             </p>
@@ -51,17 +51,17 @@
       </tr>
     </table>
 
-    <%= link_to users_admin_survey_path(@survey), class: "btn btn-primary mb-2" do %>
+    <%= link_to users_admin_survey_path(@survey), class: 'btn btn-primary mb-2' do %>
       <i class="bi bi-files"></i> <%= t('views.submission_status') %>
     <% end %>
 
     <%= link_to download_merged_results_admin_survey_path(@survey),
-          class: "btn btn-primary mb-2" do %>
+          class: 'btn btn-primary mb-2' do %>
       <i class="bi bi-download"></i> <%= t('views.download_merged_results') %>
     <% end %>
 
     <%= link_to download_definition_admin_survey_path(@survey),
-          class: "btn btn-primary mb-2", disabled: !@survey.merged do %>
+          class: 'btn btn-primary mb-2', disabled: !@survey.merged do %>
       <i class="bi bi-download"></i> <%= t('views.download_definition') %>
     <% end %>
 

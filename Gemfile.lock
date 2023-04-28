@@ -291,7 +291,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.7)
+    zeitwerk (2.6.8)
 
 PLATFORMS
   arm64-darwin-22
@@ -305,6 +305,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kaminari
+  matrix
   meta-tags
   omniauth-auth0
   omniauth-rails_csrf_protection

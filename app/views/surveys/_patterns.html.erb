@@ -6,15 +6,12 @@
     <div class="card-body">
       <div class="row">
         <div class="col-6">
-          <%= pie_chart pattern[:options],
-            title: t("views.school"),
-            download: {background: "#ffffff"} %>
+          <%= pie_chart pattern[:options], title: t('views.school'), download: { background: '#ffffff' } %>
         </div>
         <div class="col-6">
-          <% if @survey.aggregated %>
-            <%= pie_chart @survey.aggregated["patterns"]["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]["options"],
-              title: t("views.comparator"),
-              download: {background: "#ffffff"} %>
+          <% if @survey.aggregated and pattern %>
+            <%= pie_chart Survey.sort_pattern_with_options(@survey.aggregated['patterns']["#{@result.grade}-#{@result.subject}-#{params[:comparator]}"][i]['options'], pattern[:options]),
+              title: t('views.comparator'), download: { background: '#ffffff' } %>
           <% end %>
         </div>
       </div>
