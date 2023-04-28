@@ -79,8 +79,8 @@ class Survey < ApplicationRecord
       end
 
       if grade_id != sheet.cell(i - 1, 1).to_i or
-           subject_id != sheet.cell(i - 1, 2).to_i or
-           number != sheet.cell(i - 1, 3).to_i
+          subject_id != sheet.cell(i - 1, 2).to_i or
+          number != sheet.cell(i - 1, 3).to_i
         questions[grade_id.to_s + "-" + subject_id.to_s].push(hash)
       end
     end
@@ -259,6 +259,15 @@ class Survey < ApplicationRecord
     return params
   end
 
+  def self.sort_pattern_with_options(patterns, options)
+    outputs = Hash.new
+    options.keys.each do |key|
+      outputs[key] = patterns[key]
+    end
+
+    return outputs
+  end
+
   def self.histogram_chart(values)
     outputs = []
     values.each_with_index do |value, i|
@@ -269,27 +278,18 @@ class Survey < ApplicationRecord
   end
 
   def aggregate_results
-    patterns, correct_rates, categories, histograms =
-      Hash.new,
-      Hash.new,
-      Hash.new,
-      Hash.new
+    patterns, correct_rates, categories, histograms = Hash.new, Hash.new, Hash.new, Hash.new
 
     self.questions.each do |key, questions|
-      grade, subject = key.split("-")
+      grade, subject = key.split('-')
 
       # Aggregation for Total
       selected_results = Array.new
-      Result
-        .where(survey_id: self.id, grade: grade, subject: subject)
-        .each { |result| selected_results += result.converted }
-      result =
-        Result.new(
-          survey_id: self.id,
-          grade: grade,
-          subject: subject,
-          converted: selected_results,
-        )
+      Result.where(survey_id: self.id, grade: grade, subject: subject).each do |result|
+        selected_results += result.converted
+      end
+      result = Result.new(survey_id: self.id, grade: grade, subject: subject, converted: selected_results)
+
       patterns["#{grade}-#{subject}-all"] = result.patterns
       correct_rates["#{grade}-#{subject}-all"] = result.correct_rates
       categories["#{grade}-#{subject}-all"] = result.categories

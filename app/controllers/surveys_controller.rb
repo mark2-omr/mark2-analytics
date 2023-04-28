@@ -29,7 +29,10 @@ class SurveysController < ApplicationController
     @survey.student_attributes.each_with_index do |(key, values), i|
       options = Hash.new
       options["#{t("views.all")} (#{key})"] = 0
-      @student_attributes.push(options.update(values.invert))
+
+      options = options.update(values.invert)
+      options = options.sort {|(k1, v1), (k2, v2)| v1.to_i <=> v2.to_i }.to_h
+      @student_attributes.push(options)
     end
 
     @comparators = [[t('views.all'), [[t('views.all'), 'all']]]]
@@ -45,21 +48,9 @@ class SurveysController < ApplicationController
 
     if params[:commit]
       if params[:method] == 'cross'
-        @cross =
-          @survey.cross(
-            params[:cross1],
-            params[:cross2],
-            params[:student_attributes],
-            current_user,
-          )
+        @cross = @survey.cross(params[:cross1], params[:cross2], params[:student_attributes], current_user)
       else
-        @result =
-          Result.where(
-            user_id: current_user.id,
-            survey_id: @survey.id,
-            grade: params[:grade],
-            subject: params[:subject],
-          ).first
+        @result = Result.where(user_id: current_user.id, survey_id: @survey.id, grade: params[:grade], subject: params[:subject]).first
       end
     end
   end
@@ -69,6 +60,9 @@ class SurveysController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_survey
     @survey = Survey.find(params[:id])
+    unless @survey.group_id == current_user.group_id
+      redirect_to root_url
+    end
   end
 
   # Only allow a list of trusted parameters through.

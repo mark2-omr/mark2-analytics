@@ -75,6 +75,7 @@ group :test do
   gem 'webdrivers'
 end
 
+gem 'matrix'
 gem 'kaminari'
 gem 'meta-tags'
 gem 'omniauth-auth0'
