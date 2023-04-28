@@ -69,6 +69,9 @@ class SurveysController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_survey
     @survey = Survey.find(params[:id])
+    unless @survey.group_id == current_user.group_id
+      redirect_to root_url
+    end
   end
 
   # Only allow a list of trusted parameters through.
