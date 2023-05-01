@@ -116,7 +116,13 @@
       <% end %>
 
       <div class="tb-3">
-        <%= form.submit class: "btn btn-primary col-4 offset-4" %>
+        <button class="btn btn-primary col-4 offset-4" name="commit" value="true">
+          <span class="show-when-enabled"><%= t('views.analyze') %></span>
+          <span class="show-when-disabled">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <%= t('views.processing') %>...
+          </span>
+        </button>
       </div>
     <% end %>
   </div>
