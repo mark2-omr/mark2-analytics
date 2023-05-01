@@ -16,6 +16,7 @@ ja:
     enabled: "有効"
     disabled: "無効"
     no_data: "登録されているデータはありません。"
+    processing: "処理中"
 
     download_definition: "定義のダウンロード"
     download_merged_results: "結果のダウンロード"
