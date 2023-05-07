@@ -40,6 +40,7 @@ class SurveysController < ApplicationController
       next if attribute_label == t('views.class')
 
       values = []
+      attribute_values = attribute_values.sort{|a, b| a[0].to_i <=> b[0].to_i}.to_h
       attribute_values.each do |attribute_key, attribute_value|
         values.push([attribute_value, "#{attribute_label}-#{attribute_key}"])
       end

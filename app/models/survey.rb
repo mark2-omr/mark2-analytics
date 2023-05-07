@@ -259,13 +259,24 @@ class Survey < ApplicationRecord
     return params
   end
 
-  def self.sort_pattern_with_options(patterns, options)
+  def self.format_pattern_for_chart(patterns)
+    total = patterns.values.inject(:+)
+    outputs = Hash.new
+    patterns.each do |key, value|
+      label = "#{key}: #{value} (#{(value.to_f / total * 100).round(2)}%)"
+      outputs[label] = value
+    end
+
+    return outputs
+  end
+
+  def self.format_and_sort_pattern_for_chart(patterns, options)
     outputs = Hash.new
     options.keys.each do |key|
       outputs[key] = patterns[key]
     end
 
-    return outputs
+    return self.format_pattern_for_chart(outputs)
   end
 
   def self.histogram_chart(values)
