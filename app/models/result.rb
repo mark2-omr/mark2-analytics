@@ -9,25 +9,25 @@ class Result < ApplicationRecord
     param = "grade=#{self.grade}&subject=#{self.subject}&parsed=#{self.parsed}"
     uri = URI.parse(self.survey.convert_url)
     http = Net::HTTP.new(uri.host, uri.port)
-    if uri.scheme == "https"
+    if uri.scheme == 'https'
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
     response = JSON.parse(http.post(uri.path, param).body)
 
     students = Array.new
-    response["converted"].each do |student|
+    response['converted'].each do |student|
       values = Array.new
       i = 0
       self.survey.questions["#{self.grade}-#{self.subject}"].each do |question|
         value = Array.new
-        question["options"].size.times do |j|
-          value.push(student["values"][i])
+        question['options'].size.times do |j|
+          value.push(student['values'][i])
           i += 1
         end
         values.push(value)
       end
-      student["values"] = values
+      student['values'] = values
       students.push(student)
     end
 
