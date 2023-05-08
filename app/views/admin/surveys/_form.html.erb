@@ -12,28 +12,33 @@
   <% end %>
 
   <div class="mb-3">
-    <%= form.label :name, class: "form-label" %>
-    <%= form.text_field :name, class: "form-control", required: true %>
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control', required: true %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :definition, class: "form-label" %>
-    <%= form.file_field :definition, class: "form-control", accept: ".xlsx",
-      required: params[:action] == "new" %>
+    <%= form.label :definition, class: 'form-label' %>
+    <%= form.file_field :definition, class: 'form-control', accept: '.xlsx',
+      required: params[:action] == 'new' %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :convert_url, class: "form-label" %>
-    <%= form.text_field :convert_url, class: "form-control" %>
+    <%= form.label :convert_url, class: 'form-label' %>
+    <%= form.text_field :convert_url, class: 'form-control' %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :submittable, class: "form-label" %>
+    <%= form.label :submittable, class: 'form-label' %>
     <%= form.select :submittable, [[t('views.enabled'), true],
       [t('views.disabled'), false]], {}, class: 'form-control' %>
   </div>
 
+  <div class="mb-3">
+    <%= form.label :held_on, class: 'form-label' %><br />
+    <%= form.date_select(:held_on, {start_year: 2000, end_year: Date.today.year, use_month_numbers: true, date_separator: ' / ', default: Date.today}, {class: 'form-control', style: 'display: inline-block; width: auto;'}) %>
+  </div>
+
   <div class="tb-3">
-    <%= form.submit class: "btn btn-primary col-4 offset-4" %>
+    <%= form.submit class: 'btn btn-primary col-4 offset-4' %>
   </div>
 <% end %>

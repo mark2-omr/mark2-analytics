@@ -4,7 +4,7 @@ class SurveysController < ApplicationController
 
   # GET /surveys or /surveys.json
   def index
-    @surveys = Survey.where(group_id: current_user.group_id)
+    @surveys = Survey.where(group_id: current_user.group_id).order('held_on DESC')
   end
 
   # GET /surveys/1 or /surveys/1.json
@@ -18,7 +18,7 @@ class SurveysController < ApplicationController
   end
 
   def analyze
-    @surveys = Survey.where(group_id: current_user.group_id)
+    @surveys = Survey.where(group_id: current_user.group_id).order('held_on DESC')
     if params[:survey_id]
       @survey = Survey.find(params[:survey_id])
     else
