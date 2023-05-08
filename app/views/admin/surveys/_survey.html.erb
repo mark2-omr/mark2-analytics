@@ -49,6 +49,12 @@
           <%= survey.submittable ? t('views.enabled') : t('views.disabled') %>
         </td>
       </tr>
+      <tr>
+        <th><%= t('activerecord.attributes.survey.held_on') %></th>
+        <td>
+          <%= survey.held_on %>
+        </td>
+      </tr>
     </table>
 
     <%= link_to users_admin_survey_path(@survey), class: 'btn btn-primary mb-2' do %>
