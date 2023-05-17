@@ -1,24 +1,13 @@
 class ResultsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_result, only: %i[show edit update destroy download]
-
-  # GET /results or /results.json
-  def index
-    @results = Result.all
-  end
-
-  # GET /results/1 or /results/1.json
-  def show
-  end
+  before_action :general_user_required
+  before_action :set_result, only: %i[show destroy download]
+  before_action :set_survey, only: %i[new create destroy download]
 
   # GET /results/new
   def new
     @survey = Survey.find(params[:survey_id])
     @result = Result.new(survey_id: params[:survey_id])
-  end
-
-  # GET /results/1/edit
-  def edit
   end
 
   # POST /results or /results.json
@@ -42,7 +31,7 @@ class ResultsController < ApplicationController
           grade: @result.grade,
           subject: @result.subject,
         },
-        alert: t("messages.check_grade_and_subject"),
+        alert: t('messages.check_grade_and_subject'),
       )
       return
     end
@@ -54,12 +43,12 @@ class ResultsController < ApplicationController
     rescue StandardError
       redirect_to(
         {
-          action: "new",
+          action: 'new',
           survey_id: @result.survey.id,
           grade: @result.grade,
           subject: @result.subject,
         },
-        alert: t("messages.data_convert_error"),
+        alert: t('messages.data_convert_error'),
       )
       return
     end
@@ -67,12 +56,12 @@ class ResultsController < ApplicationController
     unless @result.verified
       redirect_to(
         {
-          action: "new",
+          action: 'new',
           survey_id: @result.survey.id,
           grade: @result.grade,
           subject: @result.subject,
         },
-        alert: @result.messages.join("<br />"),
+        alert: @result.messages.join('<br />'),
       )
       return
     end
@@ -80,32 +69,11 @@ class ResultsController < ApplicationController
     respond_to do |format|
       if @result.save
         format.html do
-          redirect_to @result.survey, notice: t("messages.result_created")
+          redirect_to @result.survey, notice: t('messages.result_created')
         end
         format.json { render :show, status: :created, location: @result }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json do
-          render json: @result.errors, status: :unprocessable_entity
-        end
-      end
-    end
-  end
-
-  # PATCH/PUT /results/1 or /results/1.json
-  def update
-    respond_to do |format|
-      if @result.update(result_params)
-        @result.file = params[:result][:file].read
-        @result.save
-
-        format.html do
-          redirect_to result_url(@result),
-                      notice: "Result was successfully updated."
-        end
-        format.json { render :show, status: :ok, location: @result }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
         format.json do
           render json: @result.errors, status: :unprocessable_entity
         end
@@ -134,20 +102,41 @@ class ResultsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_result
     @result = Result.find(params[:id])
+    unless @result.user_id == current_user.id
+      redirect_to root_url
+    end
+  end
+
+  def set_survey
+    if params[:action] == 'new'
+      @survey = Survey.find(params[:survey_id])
+    elsif params[:action] == 'create'
+      @survey = Survey.find(result_params[:survey_id])
+    elsif params[:action] == 'destroy' or params[:action] == 'download'
+      @survey = Survey.find(@result.survey_id)
+    end
+
+    unless @survey.group_id == current_user.group_id
+      redirect_to root_url
+    end
+
+    if params[:action] == 'new' or params[:action] == 'create' or
+         params[:action] == 'destroy'
+      unless @survey.submittable
+        redirect_to @survey
+      end
+    end
+  end
+
+  def general_user_required
+    if current_user.manager
+      redirect_to root_url
+    end
   end
 
   # Only allow a list of trusted parameters through.
   def result_params
-    params.require(:result).permit(
-      :survey_id,
-      :user_id,
-      :grade,
-      :subject,
-      :file,
-      :parsed,
-      :converted,
-      :messages,
-      :verified
-    )
+    params.require(:result).permit(:survey_id, :user_id, :grade, :subject,
+      :file, :parsed, :converted, :messages, :verified)
   end
 end
