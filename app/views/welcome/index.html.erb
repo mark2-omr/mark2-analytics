@@ -47,6 +47,12 @@
       <p>
         <%= t('views.sign_in_message') %>
       </p>
+      <p>
+        <div class="alert alert-danger show mt-3 mb-0" role="alert">
+          <p><%= t('views.notes_on_your_acount') %></p>
+          <p><%= t('views.notes_on_your_acount_example') %></p>
+        </div>
+      </p>
       <%= form_tag('/auth/auth0', name: 'welcome_sign_in', method: :post,
             data: { turbo: false }) do %>
         <a href="#" onclick="document.welcome_sign_in.submit();" class="btn btn-primary col-4 offset-4">
