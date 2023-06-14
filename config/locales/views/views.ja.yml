@@ -76,5 +76,5 @@ ja:
     subject_5: "英語"
     subject_6: "アンケート"
 
-    notes_on_your_acount: '（仮）ログイン画面で指定するメールアドレスは昨年までのユーザーIDに"@mark2.org"をつけてください。'
+    notes_on_your_acount: 'ログイン画面で指定するメールアドレスは昨年までのユーザーIDに"@mark2.org"をつけてください。'
     notes_on_your_acount_example: "例：miyagi-123 → miyagi-123@mark2.org"
