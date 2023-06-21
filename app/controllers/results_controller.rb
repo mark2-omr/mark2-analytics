@@ -26,7 +26,7 @@ class ResultsController < ApplicationController
     else
       redirect_to(
         {
-          action: "new",
+          action: 'new',
           survey_id: @result.survey.id,
           grade: @result.grade,
           subject: @result.subject,
@@ -68,7 +68,7 @@ class ResultsController < ApplicationController
 
     respond_to do |format|
       if @result.save
-        logger.info("✅ Create result##{@result.id} by #{current_user.email} (#{request.remote_ip}) #{request.env['HTTP_USER_AGENT']}")
+        log_audit("Create result##{@result.id}")
         format.html do
           redirect_to @result.survey, notice: t('messages.result_created')
         end
@@ -84,7 +84,7 @@ class ResultsController < ApplicationController
 
   # DELETE /results/1 or /results/1.json
   def destroy
-    logger.info("✅ Destroy result##{@result.id} by #{current_user.email} (#{request.remote_ip}) #{request.env['HTTP_USER_AGENT']}")
+    log_audit("Destroy result##{@result.id}")
     @result.destroy
 
     respond_to do |format|
@@ -96,7 +96,7 @@ class ResultsController < ApplicationController
   end
 
   def download
-    logger.info("✅ Download result##{@result.id} by #{current_user.email} (#{request.remote_ip}) #{request.env['HTTP_USER_AGENT']}")
+    log_audit("Download result##{@result.id}")
     send_data(@result.file, filename: "Mark2_File_#{@result.survey_id}_#{@result.grade}_#{@result.subject}.xlsx")
   end
 

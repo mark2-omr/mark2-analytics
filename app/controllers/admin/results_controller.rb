@@ -65,7 +65,7 @@ class Admin::ResultsController < ApplicationController
 
     respond_to do |format|
       if @result.save
-        logger.info("✅ Create result##{@result.id} by #{current_user.email} (#{request.remote_ip}) #{request.env['HTTP_USER_AGENT']}")
+        log_audit("Create result##{@result.id}")
         format.html do
           redirect_to @result.survey, notice: t('messages.result_created')
         end
@@ -81,7 +81,7 @@ class Admin::ResultsController < ApplicationController
 
   # DELETE /results/1 or /results/1.json
   def destroy
-    logger.info("✅ Destroy result##{@result.id} by #{current_user.email} (#{request.remote_ip}) #{request.env['HTTP_USER_AGENT']}")
+    log_audit("Destroy result##{@result.id}")
     @result.destroy
 
     respond_to do |format|
@@ -94,7 +94,7 @@ class Admin::ResultsController < ApplicationController
   end
 
   def download
-    logger.info("✅ Download result##{@result.id} by #{current_user.email} (#{request.remote_ip}) #{request.env['HTTP_USER_AGENT']}")
+    log_audit("Download result##{@result.id}")
     send_data(@result.file, filename: "#{@result.id}.xlsx")
   end
 

@@ -2,12 +2,12 @@ class SessionsController < ApplicationController
   def create
     user = User.find_or_create_from_auth(request.env["omniauth.auth"])
     session[:user_id] = user.uid
-    logger.info("✅ Sign in #{current_user.email} (#{request.remote_ip}) #{request.env['HTTP_USER_AGENT']}")
+    log_audit('Sign in')
     redirect_to request.env["omniauth.origin"] || root_url
   end
 
   def destroy
-    logger.info("✅ Sign out #{current_user.email} (#{request.remote_ip}) #{request.env['HTTP_USER_AGENT']}")
+    log_audit('Sign out')
     reset_session
     request_params = {
       returnTo: root_url,
