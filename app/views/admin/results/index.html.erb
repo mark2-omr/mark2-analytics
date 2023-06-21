@@ -18,7 +18,7 @@
         <%= link_to t('views.submission_status'), users_admin_survey_path(@survey) %>
       </li>
       <li class="breadcrumb-item active" aria-current="page">
-        <%= @user.name %>
+        <%= @user.name %> (<%= @user.email %>)
       </li>
     </ol>
   </nav>
@@ -44,19 +44,17 @@
               <% end %>
             </ul>
           </div>
-          <% if @survey.submittable %>
-            <div class="card-footer">
-              <div class="d-flex justify-content-between flex-wrap flex-md-nowrap">
-                <%= link_to download_admin_result_path(result), class: "btn btn-primary" do %>
-                  <i class="bi bi-download"></i> <%= t("views.download") %>
-                <% end %>
-                <%= button_to admin_result_path(result), method: :delete, class: "btn btn-danger",
-                  data: { turbo_confirm: t("messages.confirm_deletion") } do %>
-                    <i class="bi bi-trash"></i> <%= t("views.delete") %>
-                <% end %>
-              </div>
+          <div class="card-footer">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap">
+              <%= link_to download_admin_result_path(result), class: "btn btn-primary" do %>
+                <i class="bi bi-download"></i> <%= t("views.download") %>
+              <% end %>
+              <%= button_to admin_result_path(result), method: :delete, class: "btn btn-danger",
+                data: { turbo_confirm: t("messages.confirm_deletion") } do %>
+                  <i class="bi bi-trash"></i> <%= t("views.delete") %>
+              <% end %>
             </div>
-          <% end %>
+          </div>
         </div>
       <% end %>
     <% else %>

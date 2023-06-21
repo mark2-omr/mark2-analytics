@@ -61,13 +61,12 @@ class Admin::ResultsController < ApplicationController
       return
     end
 
-    @result.file = params[:result][:file].read
-
     respond_to do |format|
       if @result.save
         log_audit("Create result##{@result.id}")
         format.html do
-          redirect_to @result.survey, notice: t('messages.result_created')
+          redirect_to admin_results_url(survey_id: @result.survey.id,
+            user_id: @result.user.id), notice: t('messages.result_created')
         end
         format.json { render :show, status: :created, location: @result }
       else
@@ -86,7 +85,7 @@ class Admin::ResultsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to admin_result_url(survey_id: @result.survey.id,
+        redirect_to admin_results_url(survey_id: @result.survey.id,
           user_id: @result.user.id), notice: t('messages.result_destroyed')
       end
       format.json { head :no_content }

@@ -18,7 +18,9 @@
         <%= link_to t('views.submission_status'), users_admin_survey_path(@survey) %>
       </li>
       <li class="breadcrumb-item" aria-current="page">
-        <%= link_to @user.name, admin_results_path(survey_id: @survey, user_id: @user.id) %>
+        <%= link_to admin_results_path(survey_id: @survey, user_id: @user.id) do %>
+          <%= @user.name %> (<%= @user.email %>)
+        <% end %>
       </li>
       <li class="breadcrumb-item active" aria-current="page">
         <%= t("views.new_result") %>

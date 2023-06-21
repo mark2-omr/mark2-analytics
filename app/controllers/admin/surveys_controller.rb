@@ -90,7 +90,7 @@ class Admin::SurveysController < ApplicationController
   end
 
   def users
-    @users = User.where(group_id: @survey.group_id, manager: false)
+    @users = User.where(group_id: @survey.group_id, manager: false).order('email ASC')
   end
 
   def download_definition
