@@ -36,6 +36,7 @@ class Admin::SurveysController < ApplicationController
 
     respond_to do |format|
       if @survey.save
+        log_audit("Create survey##{@survey.id}")
         format.html do
           redirect_to admin_survey_url(@survey), notice: t('messages.survey_created')
         end
@@ -53,6 +54,7 @@ class Admin::SurveysController < ApplicationController
   def update
     respond_to do |format|
       if @survey.update(survey_params)
+        log_audit("Update survey##{@survey.id}")
         if params[:survey][:definition]
           @survey.definition = params[:survey][:definition].read
           @survey.load_definition(
@@ -76,6 +78,7 @@ class Admin::SurveysController < ApplicationController
 
   # DELETE /surveys/1 or /surveys/1.json
   def destroy
+    log_audit("Destroy survey##{@survey.id}")
     @survey.destroy
 
     respond_to do |format|
@@ -87,7 +90,7 @@ class Admin::SurveysController < ApplicationController
   end
 
   def users
-    @users = User.where(group_id: @survey.group_id, manager: false)
+    @users = User.where(group_id: @survey.group_id, manager: false).order('email ASC')
   end
 
   def download_definition
