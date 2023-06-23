@@ -1,5 +1,6 @@
 class SurveysController < ApplicationController
   before_action :authenticate_user!
+  before_action :general_user_required
   before_action :set_survey, only: %i[show edit update destroy users download_definition]
 
   # GET /surveys or /surveys.json

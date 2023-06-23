@@ -131,12 +131,6 @@ class ResultsController < ApplicationController
     end
   end
 
-  def general_user_required
-    if current_user.manager
-      redirect_to root_url
-    end
-  end
-
   # Only allow a list of trusted parameters through.
   def result_params
     params.require(:result).permit(:survey_id, :user_id, :grade, :subject,
