@@ -24,7 +24,7 @@
   </nav>
 </div>
 
-<div id="<%= dom_id @survey %>" class="card">
+<div id="<%= dom_id @survey %>" class="card mb-3">
   <div class="card-header">
     <%= @survey.name %>
   </div>
@@ -49,9 +49,11 @@
               <%= link_to download_admin_result_path(result), class: "btn btn-primary" do %>
                 <i class="bi bi-download"></i> <%= t("views.download") %>
               <% end %>
-              <%= button_to admin_result_path(result), method: :delete, class: "btn btn-danger",
-                data: { turbo_confirm: t("messages.confirm_deletion") } do %>
-                  <i class="bi bi-trash"></i> <%= t("views.delete") %>
+              <% if @survey.submittable %>
+                <%= button_to admin_result_path(result), method: :delete, class: "btn btn-danger",
+                  data: { turbo_confirm: t("messages.confirm_deletion") } do %>
+                    <i class="bi bi-trash"></i> <%= t("views.delete") %>
+                <% end %>
               <% end %>
             </div>
           </div>
@@ -63,9 +65,11 @@
       </div>
     <% end %>
   </div>
-  <div class="card-footer">
-    <%= link_to new_admin_result_path(survey_id: @survey.id, user_id: @user.id), class: "btn btn-primary" do %>
-      <i class="bi bi-plus-lg"></i> <%= t("views.new_result") %>
-    <% end %>
-  </div>
+  <% if @survey.submittable %>
+    <div class="card-footer">
+      <%= link_to new_admin_result_path(survey_id: @survey.id, user_id: @user.id), class: "btn btn-primary" do %>
+        <i class="bi bi-plus-lg"></i> <%= t("views.new_result") %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
