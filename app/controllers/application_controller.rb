@@ -25,6 +25,12 @@ class ApplicationController < ActionController::Base
     redirect_to root_url unless current_user.manager
   end
 
+  def general_user_required
+    if current_user.manager
+      redirect_to root_url
+    end
+  end
+
   def log_audit(operation)
     begin
       user_agent = request.env['HTTP_USER_AGENT']
