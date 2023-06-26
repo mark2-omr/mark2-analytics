@@ -1,16 +1,12 @@
 class Admin::ResultsController < ApplicationController
   before_action :authenticate_user!
   before_action :manager_required
-  before_action :set_result, only: %i[show edit update destroy download]
-  before_action :set_survey_and_user, only: %i[ index new ]
+  before_action :set_result, only: %i[destroy download]
+  before_action :set_survey_and_user, only: %i[index new]
 
   # GET /results or /results.json
   def index
     @results = Result.where(survey_id: @survey.id, user_id: @user.id).order('grade ASC, subject ASC')
-  end
-
-  # GET /results/1 or /results/1.json
-  def show
   end
 
   # GET /results/new

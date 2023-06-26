@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :results do
+  resources :results, only: %i[new create destroy] do
     member do
       get :download
     end
@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :results do
+    resources :results, only: %i[index new create destroy] do
       member do
         get :download
       end
