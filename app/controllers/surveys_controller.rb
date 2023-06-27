@@ -59,7 +59,7 @@ class SurveysController < ApplicationController
         end
       rescue => e
         @error = e.message
-        logger.error("🔥 Analysis Error #{current_user.email} #{e.message}")
+        logger.error("🔥 Analysis Error survey##{@survey.id} #{current_user.email} #{e.message}")
       end
     end
   end

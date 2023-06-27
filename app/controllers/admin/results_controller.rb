@@ -90,7 +90,7 @@ class Admin::ResultsController < ApplicationController
 
   def download
     log_audit("Download result##{@result.id}")
-    send_data(@result.file, filename: "#{@result.id}.xlsx")
+    send_data(@result.file, filename: "Mark2_File_#{@result.survey_id}_#{@result.user_id}_#{@result.grade}_#{@result.subject}.xlsx")
   end
 
   private
