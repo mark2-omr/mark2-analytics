@@ -1,7 +1,7 @@
 class SurveysController < ApplicationController
   before_action :authenticate_user!
   before_action :general_user_required
-  before_action :set_survey, only: %i[show edit update destroy users download_definition]
+  before_action :set_survey, only: %i[show]
 
   # GET /surveys or /surveys.json
   def index
@@ -49,10 +49,17 @@ class SurveysController < ApplicationController
     end
 
     if params[:commit]
-      if params[:method] == 'cross'
-        @cross = @survey.cross(params[:cross1], params[:cross2], params[:student_attributes], current_user)
-      else
-        @result = Result.where(user_id: current_user.id, survey_id: @survey.id, grade: params[:grade], subject: params[:subject]).first
+      begin
+        if params[:method] == 'cross'
+          @cross = @survey.cross(params[:cross1], params[:cross2],
+            params[:student_attributes], current_user)
+        else
+          @result = Result.where(user_id: current_user.id, survey_id: @survey.id,
+            grade: params[:grade], subject: params[:subject]).first
+        end
+      rescue => e
+        @error = e.message
+        logger.error("🔥 Analysis Error #{current_user.email} #{e.message}")
       end
     end
   end

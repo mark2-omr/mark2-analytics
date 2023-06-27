@@ -46,6 +46,9 @@ ja:
       number_of_people: "人数"
       number_of_corrects: "正答数"
       data_not_found: "データは登録されていません。"
+      hint_for_changing_subjects: "科目別の分析をするためには「分析方法」で「クロス集計」以外を選択してください。"
+      hint_for_changing_grades: "他の学年のクロス集計をするためには「学年」の選択を変更してください。"
+      error_occurred: "エラーが発生しました。"
 
     school: "学校"
     comparator: "比較対象"
