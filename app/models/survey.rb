@@ -143,13 +143,13 @@ class Survey < ApplicationRecord
       )
     end
 
-    options = self.questions["#{grade}-#{subject}"][question_number]["options"]
+    options = self.questions["#{grade}-#{subject}"][question_number-1]['options']
 
     if options.size > 1
       return(
         {
-          "1" => I18n.t("views.analysis.correct"),
-          "2" => I18n.t("views.analysis.incorrect"),
+          '1' => I18n.t('views.analysis.correct'),
+          '2' => I18n.t('views.analysis.incorrect'),
         }
       )
     else
@@ -214,8 +214,8 @@ class Survey < ApplicationRecord
   end
 
   def cross(cross1, cross2, student_attributes, current_user)
-    grade1, subject1, question_number1 = cross1.split("-").map!(&:to_i)
-    grade2, subject2, question_number2 = cross2.split("-").map!(&:to_i)
+    grade1, subject1, question_number1 = cross1.split('-').map!(&:to_i)
+    grade2, subject2, question_number2 = cross2.split('-').map!(&:to_i)
 
     options1 = self.cross_options(grade1, subject1, question_number1)
     options2 = self.cross_options(grade2, subject2, question_number2)
