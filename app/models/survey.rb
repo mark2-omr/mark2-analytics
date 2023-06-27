@@ -109,18 +109,22 @@ class Survey < ApplicationRecord
   def cross_questions(grade = 0)
     options = Array.new
     self.questions.each do |key, values|
-      if key.split("-")[1] != "6"
+      unless key.split('-')[0].to_i == grade
+        next
+      end
+
+      if key.split('-')[1] != '6'
         label =
-          I18n.t("views.grade_#{key.split("-")[0]}") + " " +
-            I18n.t("views.subject_#{key.split("-")[1]}") + " " +
-            I18n.t("views.analysis.correct_rates_group")
-        options.push([label, key + "-0"])
+          I18n.t("views.grade_#{key.split('-')[0]}") + ' ' +
+            I18n.t("views.subject_#{key.split('-')[1]}") + ' ' +
+            I18n.t('views.analysis.correct_rates_group')
+        options.push([label, key + '-0'])
       end
       values.each_with_index do |value, i|
         label =
-          I18n.t("views.grade_#{key.split("-")[0]}") + " " +
-            I18n.t("views.subject_#{key.split("-")[1]}") + " " + value["label"]
-        options.push([label, key + "-" + (i + 1).to_s])
+          I18n.t("views.grade_#{key.split('-')[0]}") + ' ' +
+            I18n.t("views.subject_#{key.split('-')[1]}") + ' ' + value['label']
+        options.push([label, key + '-' + (i + 1).to_s])
       end
     end
 

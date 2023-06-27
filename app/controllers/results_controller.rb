@@ -133,7 +133,16 @@ class ResultsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def result_params
-    params.require(:result).permit(:survey_id, :user_id, :grade, :subject,
-      :file, :parsed, :converted, :messages, :verified)
+    params.require(:result).permit(
+      :survey_id,
+      :user_id,
+      :grade,
+      :subject,
+      :file,
+      :parsed,
+      :converted,
+      :messages,
+      :verified
+    )
   end
 end
