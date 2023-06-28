@@ -21,8 +21,16 @@
     <div class="card-body">
       <div id="surveys" class="list-group">
         <% @surveys.each do |survey| %>
-          <%= link_to survey.name, survey,
-            class: "list-group-item list-group-item-action" %>
+          <%= link_to survey, class: 'list-group-item list-group-item-action d-flex justify-content-between' do %>
+            <%= survey.name %>
+            <% if survey.submittable %>
+              <div>
+                <span class="badge bg-success">
+                  <%= t('views.submittable') %>
+                </span>
+              </div>
+            <% end %>
+          <% end %>
         <% end %>
       </div>
     </div>
