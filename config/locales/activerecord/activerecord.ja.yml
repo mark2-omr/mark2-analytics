@@ -23,6 +23,7 @@ ja:
         question_attributes: "設問属性"
         student_attributes: "児童・生徒属性"
         submittable: "データ提出"
+        merged: "結果ファイル"
         held_on: "実施日"
       result:
         grade: "学年"

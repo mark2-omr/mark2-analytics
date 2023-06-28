@@ -18,6 +18,7 @@ ja:
     no_data: "登録されているデータはありません。"
     processing: "処理中"
 
+    submittable: "提出可能"
     download_definition: "定義のダウンロード"
     download_merged_results: "結果のダウンロード"
     aggregate_results: "結果を集計"

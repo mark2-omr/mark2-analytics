@@ -23,7 +23,8 @@ Rails.application.routes.draw do
         get :users
         get :download_definition
         get :download_merged_results
-        patch :aggregate_and_merge_results
+        patch :aggregate_results
+        patch :export_results
       end
     end
 

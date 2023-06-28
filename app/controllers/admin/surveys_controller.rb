@@ -1,7 +1,7 @@
 class Admin::SurveysController < ApplicationController
   before_action :authenticate_user!
   before_action :manager_required
-  before_action :set_survey, only: %i[show edit update destroy users download_definition download_merged_results aggregate_and_merge_results]
+  before_action :set_survey, only: %i[show edit update destroy users download_definition download_merged_results aggregate_results export_results]
 
   # GET /surveys or /surveys.json
   def index
@@ -55,11 +55,17 @@ class Admin::SurveysController < ApplicationController
     respond_to do |format|
       if @survey.update(survey_params)
         log_audit("Update survey##{@survey.id}")
+
         if params[:survey][:definition]
           @survey.definition = params[:survey][:definition].read
           @survey.load_definition(
             params[:survey][:definition].tempfile.to_path.to_s,
           )
+          @survey.save
+        end
+
+        if params[:survey][:merged]
+          @survey.merged = params[:survey][:merged].read
           @survey.save
         end
 
@@ -101,11 +107,16 @@ class Admin::SurveysController < ApplicationController
     send_data(@survey.merged, filename: "Mark2_Results_#{@survey.id}.xlsx")
   end
 
-  def aggregate_and_merge_results
+  def aggregate_results
     @survey.aggregate_results
-    @survey.merge_results
 
     redirect_to admin_survey_url(@survey), notice: t('messages.survey_results_aggregated')
+  end
+
+  def export_results
+    @survey.export_results
+
+    redirect_to admin_survey_url(@survey), notice: t('messages.survey_results_exported')
   end
 
   private
