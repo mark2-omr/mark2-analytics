@@ -77,10 +77,9 @@
       <i class="bi bi-download"></i> <%= t('views.download_definition') %>
     <% end %>
 
-    <hr />
-
-    <% if @survey.submittable %>
-      <%= button_to aggregate_and_merge_results_admin_survey_path(@survey),
+    <% if current_user.admin %>
+      <hr />
+      <%= button_to aggregate_results_admin_survey_path(@survey),
             class: "btn btn-primary", method: :patch,
             data: { turbo_confirm: t('messages.confirm_aggregation') } do %>
         <span class="show-when-enabled">
@@ -91,10 +90,19 @@
           <%= t('views.processing') %>...
         </span>
       <% end %>
-    <% else %>
-      <button class="btn btn-primary" disabled>
-        <i class="bi bi-calculator"></i> <%= t('views.aggregate_results') %>
-      </button>
+
+      <hr />
+      <%= button_to export_results_admin_survey_path(@survey),
+            class: "btn btn-primary", method: :patch,
+            data: { turbo_confirm: t('messages.confirm_aggregation') } do %>
+        <span class="show-when-enabled">
+          <i class="bi bi-calculator"></i> <%= t('views.aggregate_results') %>
+        </span>
+        <span class="show-when-disabled">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <%= t('views.processing') %>...
+        </span>
+      <% end %>
     <% end %>
   </div>
   <div class="card-footer">
@@ -102,9 +110,11 @@
       <%= link_to edit_admin_survey_path(survey), class: "btn btn-warning" do %>
         <i class="bi bi-pencil"></i> <%= t('views.edit') %>
       <% end %>
-      <%= button_to admin_survey_path(@survey), method: :delete, class: "btn btn-danger",
-            data: { turbo_confirm: t('messages.confirm_deletion') } do %>
-        <i class="bi bi-trash"></i> <%= t('views.delete') %>
+      <% if current_user.admin %>
+        <%= button_to admin_survey_path(@survey), method: :delete, class: "btn btn-danger",
+              data: { turbo_confirm: t('messages.confirm_deletion') } do %>
+          <i class="bi bi-trash"></i> <%= t('views.delete') %>
+        <% end %>
       <% end %>
     </div>
   </div>

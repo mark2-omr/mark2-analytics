@@ -18,6 +18,7 @@ eval "docker push gcr.io/$GCP_PROJECT_ID/$APP_NAME:latest"
 
 eval "gcloud run deploy $APP_NAME \
   --image=gcr.io/$GCP_PROJECT_ID/$APP_NAME \
+  --memory 1G \
   --region $GCP_REGION \
   --platform managed \
   --allow-unauthenticated \

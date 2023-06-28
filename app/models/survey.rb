@@ -335,7 +335,7 @@ class Survey < ApplicationRecord
     self.save
   end
 
-  def merge_results
+  def export_results
     require 'rubyXL/convenience_methods'
 
     workbook = RubyXL::Workbook.new
