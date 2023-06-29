@@ -13,12 +13,12 @@
   </nav>
 </div>
 
-<% if @surveys.count > 0 %>
-  <div class="card">
-    <div class="card-header">
-      <%= t("activerecord.models.survey") %>
-    </div>
-    <div class="card-body">
+<div class="card">
+  <div class="card-header">
+    <%= t("activerecord.models.survey") %>
+  </div>
+  <div class="card-body">
+    <% if @surveys.size > 0 %>
       <div id="surveys" class="list-group">
         <% @surveys.each do |survey| %>
           <%= link_to survey, class: 'list-group-item list-group-item-action d-flex justify-content-between' do %>
@@ -33,6 +33,10 @@
           <% end %>
         <% end %>
       </div>
-    </div>
+    <% else %>
+      <div class="alert alert-danger show" role="alert">
+        <%= t('views.no_data') %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
