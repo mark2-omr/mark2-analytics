@@ -5,7 +5,7 @@ class SurveysController < ApplicationController
 
   # GET /surveys or /surveys.json
   def index
-    @surveys = Survey.where(group_id: current_user.group_id).order('held_on DESC')
+    @surveys = Survey.select(:id, :name, :submittable).where(group_id: current_user.group_id).order('held_on DESC')
   end
 
   # GET /surveys/1 or /surveys/1.json
@@ -19,11 +19,11 @@ class SurveysController < ApplicationController
   end
 
   def analyze
-    @surveys = Survey.where(group_id: current_user.group_id).order('held_on DESC')
+    @surveys = Survey.select(:id, :name).where(group_id: current_user.group_id).order('held_on DESC')
     if params[:survey_id]
       @survey = Survey.find(params[:survey_id])
     else
-      @survey = @surveys.first
+      @survey = Survey.find(@surveys.first.id)
     end
 
     @student_attributes = Array.new
