@@ -72,12 +72,12 @@
       <% end %>
     <% end %>
 
-    <%= link_to download_definition_admin_survey_path(@survey),
-          class: 'btn btn-primary mb-2', disabled: !@survey.merged do %>
-      <i class="bi bi-download"></i> <%= t('views.download_definition') %>
-    <% end %>
-
     <% if current_user.admin %>
+      <hr />
+      <%= link_to download_definition_admin_survey_path(@survey),
+            class: 'btn btn-primary mb-2', disabled: !@survey.merged do %>
+        <i class="bi bi-download"></i> <%= t('views.download_definition') %>
+      <% end %>
       <hr />
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap">
         <%= button_to aggregate_results_admin_survey_path(@survey),
@@ -103,8 +103,8 @@
             <%= t('views.processing') %>...
           </span>
         <% end %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
   <div class="card-footer">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap">
