@@ -19,9 +19,10 @@ ja:
     processing: "処理中"
 
     submittable: "提出可能"
-    download_definition: "定義のダウンロード"
-    download_merged_results: "結果のダウンロード"
-    aggregate_results: "結果を集計"
+    download_definition: "定義ファイルのダウンロード"
+    download_merged_results: "結果ファイルのダウンロード"
+    aggregate_results: "比較対象の結果を集計"
+    export_results: "結果ファイルを作成"
     submission_status: "提出状況"
     data_analysis: "データ分析"
 
