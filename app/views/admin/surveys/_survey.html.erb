@@ -79,31 +79,32 @@
 
     <% if current_user.admin %>
       <hr />
-      <%= button_to aggregate_results_admin_survey_path(@survey),
-            class: "btn btn-primary", method: :patch,
-            data: { turbo_confirm: t('messages.confirm_aggregation') } do %>
-        <span class="show-when-enabled">
-          <i class="bi bi-calculator"></i> <%= t('views.aggregate_results') %>
-        </span>
-        <span class="show-when-disabled">
-          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          <%= t('views.processing') %>...
-        </span>
-      <% end %>
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap">
+        <%= button_to aggregate_results_admin_survey_path(@survey),
+              class: "btn btn-primary", method: :patch,
+              data: { turbo_confirm: t('messages.confirm_aggregation') } do %>
+          <span class="show-when-enabled">
+            <i class="bi bi-calculator"></i> <%= t('views.aggregate_results') %>
+          </span>
+          <span class="show-when-disabled">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <%= t('views.processing') %>...
+          </span>
+        <% end %>
 
-      <hr />
-      <%= button_to export_results_admin_survey_path(@survey),
-            class: "btn btn-primary", method: :patch,
-            data: { turbo_confirm: t('messages.confirm_aggregation') } do %>
-        <span class="show-when-enabled">
-          <i class="bi bi-calculator"></i> <%= t('views.aggregate_results') %>
-        </span>
-        <span class="show-when-disabled">
-          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          <%= t('views.processing') %>...
-        </span>
+        <%= button_to export_results_admin_survey_path(@survey),
+              class: "btn btn-primary", method: :patch,
+              data: { turbo_confirm: t('messages.confirm_exporting') } do %>
+          <span class="show-when-enabled">
+            <i class="bi bi-file-earmark-spreadsheet-fill"></i> <%= t('views.export_results') %>
+          </span>
+          <span class="show-when-disabled">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <%= t('views.processing') %>...
+          </span>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
   <div class="card-footer">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap">
