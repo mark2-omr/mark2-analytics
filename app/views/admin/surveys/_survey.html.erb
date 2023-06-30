@@ -73,10 +73,12 @@
     <% end %>
 
     <% if current_user.admin %>
-      <hr />
-      <%= link_to download_definition_admin_survey_path(@survey),
-            class: 'btn btn-primary mb-2', disabled: !@survey.merged do %>
-        <i class="bi bi-download"></i> <%= t('views.download_definition') %>
+      <% if @survey.definition %>
+        <hr />
+        <%= button_to download_definition_admin_survey_path(@survey),
+              class: 'btn btn-primary mb-2' do %>
+          <i class="bi bi-download"></i> <%= t('views.download_definition') %>
+        <% end %>
       <% end %>
       <hr />
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap">
