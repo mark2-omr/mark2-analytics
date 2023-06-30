@@ -343,7 +343,7 @@ class Survey < ApplicationRecord
 
     self.grades.each do |grade|
       self.subjects.each do |subject|
-        results = Result.where(survey_id: self.id, grade: grade, subject: subject).order('user_id ASC')
+        results = Result.select(:user_id, :converted).where(survey_id: self.id, grade: grade, subject: subject).order('user_id ASC')
         if results.size == 0
           next
         end
