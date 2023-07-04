@@ -1,6 +1,7 @@
 class Admin::SurveysController < ApplicationController
   before_action :authenticate_user!
   before_action :manager_required
+  before_action :admin_required, only: %i[new create destroy]
   before_action :set_survey, only: %i[show edit update destroy users download_definition download_merged_results aggregate_results export_results]
 
   # GET /surveys or /surveys.json
