@@ -343,22 +343,24 @@ class Survey < ApplicationRecord
 
     self.grades.each do |grade|
       self.subjects.each do |subject|
-        results = Result.select(:user_id, :converted).where(survey_id: self.id, grade: grade, subject: subject).order('user_id ASC')
+        results = Result.joins(:user).select(:user_id, :converted, :email, :name).where(survey_id: self.id, grade: grade, subject: subject).order('users.email ASC')
         if results.size == 0
           next
         end
 
+        sheet_name = I18n.t("views.grade_#{grade}") + I18n.t("views.subject_#{subject}")
         if is_first_sheet
           sheet = workbook[0]
-          sheet.sheet_name = "#{grade}-#{subject}"
+          sheet.sheet_name = sheet_name
           is_first_sheet = false
         else
-          sheet = workbook.add_worksheet("#{grade}-#{subject}")
+          sheet = workbook.add_worksheet(sheet_name)
         end
-        sheet.add_cell(0, 0, '学校ID')
-        sheet.add_cell(0, 1, '学校種別')
-        sheet.add_cell(0, 2, '学科')
-        sheet.add_cell(0, 3, 'クラス')
+        # p self.student_attributes
+        sheet.add_cell(0, 0, '学校名')
+        sheet.add_cell(0, 1, 'クラス')
+        sheet.add_cell(0, 2, '学校種別')
+        sheet.add_cell(0, 3, '学科')
         sheet.add_cell(0, 4, '出席番号')
 
         i = 1
@@ -366,14 +368,13 @@ class Survey < ApplicationRecord
           converted = result.converted
           converted.each do |student|
             values = Array.new
-            user = User.find(result.user_id)
-            values.push(user.name)
+            # user = User.find(result.user_id)
+            values.push(result.name)
             student['student_attributes'].each do |key, value|
               values.push(value)
             end
             values.push(student['number'])
             values += student['values'].flatten
-            # print values.join(',') + "\n"
             values.each_with_index do |value, j|
               if i == 1 and j >= 5
                 sheet.add_cell(0, j, j - 4)
