@@ -3,6 +3,7 @@ namespace :cockroachdb do
     timestamp = Time.now.strftime('%Y%m%d_%H%M')
 
     print "% ccloud cluster sql\n\n"
+    print "Password: #{Rails.application.credentials.cockroachdb.password}\n\n"
     print "> BACKUP DATABASE #{Rails.application.credentials.cockroachdb.database}\n"
     print "  INTO \'s3://#{Rails.application.credentials.aws.bucket}/mark2_analytics_production_#{timestamp}?AWS_ACCESS_KEY_ID=#{Rails.application.credentials.aws.access_key_id}&AWS_SECRET_ACCESS_KEY=#{Rails.application.credentials.aws.secret_access_key}'\n"
     print "  AS OF SYSTEM TIME '-10s';\n\n"
