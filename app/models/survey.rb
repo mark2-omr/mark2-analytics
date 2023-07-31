@@ -264,7 +264,11 @@ class Survey < ApplicationRecord
   end
 
   def self.format_pattern_for_chart(patterns)
-    total = patterns.values.inject(:+)
+    total = 0
+    patterns.values.each do |value|
+      total += value.to_i
+    end
+
     outputs = Hash.new
     patterns.each do |key, value|
       label = "#{key}: #{value} (#{(value.to_f / total * 100).round(2)}%)"
@@ -312,9 +316,16 @@ class Survey < ApplicationRecord
 
       # Aggregation for Student Attibutes
       self.student_attributes.each_with_index do |(student_attribute_label, student_attribute_values), i|
-        next if student_attribute_label == I18n.t("views.class")
+        next if student_attribute_label == I18n.t('views.class')
 
         student_attribute_values.each do |key, value|
+          # Recreate result for each student attributes
+          selected_results = Array.new
+          Result.where(survey_id: self.id, grade: grade, subject: subject).each do |result|
+            selected_results += result.converted
+          end
+          result = Result.new(survey_id: self.id, grade: grade, subject: subject, converted: selected_results)
+
           student_attributes = Array.new(self.student_attributes.size, 0)
           student_attributes[i] = key
 
@@ -357,18 +368,19 @@ class Survey < ApplicationRecord
           sheet = workbook.add_worksheet(sheet_name)
         end
         # p self.student_attributes
-        sheet.add_cell(0, 0, '学校名')
-        sheet.add_cell(0, 1, 'クラス')
-        sheet.add_cell(0, 2, '学校種別')
-        sheet.add_cell(0, 3, '学科')
-        sheet.add_cell(0, 4, '出席番号')
+        sheet.add_cell(0, 0, 'ID')
+        sheet.add_cell(0, 1, '学校名')
+        sheet.add_cell(0, 2, 'クラス')
+        sheet.add_cell(0, 3, '学校種別')
+        sheet.add_cell(0, 4, '学科')
+        sheet.add_cell(0, 5, '出席番号')
 
         i = 1
         results.each do |result|
           converted = result.converted
           converted.each do |student|
             values = Array.new
-            # user = User.find(result.user_id)
+            values.push(result.email)
             values.push(result.name)
             student['student_attributes'].each do |key, value|
               values.push(value)
@@ -376,8 +388,8 @@ class Survey < ApplicationRecord
             values.push(student['number'])
             values += student['values'].flatten
             values.each_with_index do |value, j|
-              if i == 1 and j >= 5
-                sheet.add_cell(0, j, j - 4)
+              if i == 1 and j >= 6
+                sheet.add_cell(0, j, j - 5)
               end
               sheet.add_cell(i, j, value)
             end
