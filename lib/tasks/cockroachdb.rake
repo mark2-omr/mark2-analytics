@@ -24,6 +24,8 @@ namespace :cockroachdb do
     print "  AS OF SYSTEM TIME '-10s';\n\n"
 
     print "% ccloud cluster sql\n\n"
+    print "Password: #{Rails.application.credentials.cockroachdb.password}\n\n"
+    print "DROP DATABASE mark2_analytics_production CASCADE;\n\n"
     print "> RESTORE DATABASE mark2_analytics_development FROM LATEST\n"
     print "  IN \'s3://#{Rails.application.credentials.aws.bucket}/mark2_analytics_development_#{timestamp}?AWS_ACCESS_KEY_ID=#{Rails.application.credentials.aws.access_key_id}&AWS_SECRET_ACCESS_KEY=#{Rails.application.credentials.aws.secret_access_key}'\n"
     print "  WITH new_db_name = '#{Rails.application.credentials.cockroachdb.database}';\n"
