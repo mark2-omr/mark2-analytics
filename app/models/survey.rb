@@ -284,6 +284,13 @@ class Survey < ApplicationRecord
       outputs[key] = patterns[key]
     end
 
+    # optionsにキーが存在しなかったデータを付加（完全解への対応）
+    patterns.each do |key, value|
+      unless outputs.key?(key)
+        outputs[key] = patterns[key]
+      end
+    end
+
     return self.format_pattern_for_chart(outputs)
   end
 
