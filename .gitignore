@@ -35,7 +35,6 @@
 
 /node_modules
 
-deploy.sh
-cockroachdb-mark2-analytics.crt
+fly.toml
 
 .DS_Store
