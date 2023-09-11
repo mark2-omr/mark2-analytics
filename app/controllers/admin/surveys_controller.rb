@@ -105,7 +105,7 @@ class Admin::SurveysController < ApplicationController
   end
 
   def download_merged_results
-    send_data(@survey.merged, filename: "Mark2_Results_#{@survey.id}.xlsx")
+    redirect_to url_for(@survey.merged)
   end
 
   def aggregate_results

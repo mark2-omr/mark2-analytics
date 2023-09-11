@@ -12,7 +12,6 @@ class CreateSurveys < ActiveRecord::Migration[7.0]
       t.json :student_attributes
       t.boolean :submittable, default: true
       t.json :aggregated
-      t.binary :merged
       t.date :held_on
 
       t.timestamps

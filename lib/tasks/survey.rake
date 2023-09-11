@@ -20,4 +20,13 @@ namespace :survey do
       survey.export_results
     end
   end
+
+  task import_active_storage: :environment do
+    Survey.all.each do |survey|
+      if survey.merged2
+        survey.merged.attach(io: StringIO.new(survey.merged2),
+          filename: "Mark2_Results_#{survey.id}.xlsx")
+      end
+    end
+  end
 end
