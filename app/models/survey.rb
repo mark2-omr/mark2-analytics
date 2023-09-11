@@ -1,6 +1,7 @@
 class Survey < ApplicationRecord
   belongs_to :group
   has_many :results, dependent: :destroy
+  has_one_attached :merged
 
   def load_definition(path)
     workbook = Roo::Excelx.new(path)

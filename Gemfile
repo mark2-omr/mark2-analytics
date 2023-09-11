@@ -74,6 +74,7 @@ group :test do
   gem 'webdrivers'
 end
 
+gem 'aws-sdk-s3'
 gem 'matrix'
 gem 'kaminari'
 gem 'meta-tags'
