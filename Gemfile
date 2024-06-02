@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.3.0'
+ruby '3.3.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
@@ -37,7 +37,7 @@ gem 'redis', '~> 4.0'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[ mingw mswin x64_mingw jruby ]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
@@ -50,7 +50,7 @@ gem 'bootsnap', require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'debug', platforms: %i[ mri mingw x64_mingw ]
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
@@ -75,17 +75,17 @@ group :test do
 end
 
 gem 'aws-sdk-s3'
-gem 'matrix'
+gem 'chartkick'
 gem 'kaminari'
+gem 'matrix'
 gem 'meta-tags'
 gem 'omniauth-auth0'
 gem 'omniauth-rails_csrf_protection'
 gem 'roo'
 gem 'rubyXL'
-gem 'chartkick'
 
-gem "dockerfile-rails", ">= 1.5", :group => :development
+gem 'dockerfile-rails', '>= 1.5', group: :development
 
-gem "sentry-ruby", "~> 5.11"
+gem 'sentry-ruby', '~> 5.11'
 
-gem "sentry-rails", "~> 5.11"
+gem 'sentry-rails', '~> 5.11'
